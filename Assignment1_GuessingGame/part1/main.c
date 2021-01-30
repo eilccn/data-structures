@@ -6,29 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-int playGame(int number){
-	int current_guess;
-	do {
-		printf("Make a guess: ");
-		scanf("%d", &current_guess);
-
-		if (current_guess > number){
-			printf("No guess lower!\n");
-		}
-
-		else if (current_guess < number){
-			printf("No guess higher!\n");
-		}
-
-		else {
-			printf("You got it!\n");
-		}
-	} while (current_guess != number);
-	
-	return 0;	
-	
-}
-
 int main(){
 	int i, number, current_guess, num_guesses;
 	
