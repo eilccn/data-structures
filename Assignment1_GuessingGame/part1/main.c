@@ -34,14 +34,31 @@ int main(){
 	
 	srand((unsigned)time(NULL));	
 
-	for (i=0; i<5; i++){    
-		
+	for (i=0; i<5; i++){    	
 		printf("***************************\n");
 		printf("CPU Says: Pick a number 1-10 \n");
 		printf("***************************\n");
  
 		number = rand()%10+1;	
-		num_guesses = playGame(number);
+		num_guesses = 0;
+	
+		do{
+			printf("Make a guess: ");
+			scanf("%d", &current_guess);
+			num_guesses++;
+
+			if (current_guess > number){
+				printf("No guess lower!\n");
+			}
+
+			else if (current_guess < number){
+				printf("No guess higher!\n");
+			}	
+
+			else {
+				printf("You got it!\n");
+			}
+		} while (current_guess != number);
 	}
 	
 	printf("***************************\n");
