@@ -7,5 +7,5 @@ In order to start thinking a bit algorithmically, modify this file and answer th
 
 ## Answers
 
-1. *Your answer to question 1*
-2. *Your answer to question 2*
+1. It would take 10 guesses. The user is given a range of ten numbers 1-10 and one out of the 10 is the correct number. In the worst case scenario, the user would fail to guess the correct number 9 times, ruling out every number except the correct number, before guessing correctly on their 10th guess. 
+2. It would take roughly the log base 2 of 10 guesses. We use base 2 since the hint of higher or lower divides the number of guesses the user needs to take by 2 with each new  guess.  
