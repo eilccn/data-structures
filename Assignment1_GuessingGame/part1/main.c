@@ -1,1 +1,49 @@
-// Add your program here!
+// Guessing Game in C
+// param1:
+// expected output:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int playGame(int number){
+	int current_guess;
+	do {
+		printf("Make a guess: ");
+		scanf("%d", &current_guess);
+
+		if (current_guess > number){
+			printf("No guess lower!\n");
+		}
+
+		else if (current_guess < number){
+			printf("No guess higher!\n");
+		}
+
+		else {
+			printf("You got it!\n");
+		}
+	} while (current_guess != number);
+	
+	return 0;	
+	
+}
+
+int main(){
+	int i, number, current_guess, number_of_guesses;		
+	i = 0;
+	i++;
+	
+	srand((unsigned)time(NULL));	
+
+	do{
+		printf("CPU Says: Pick a number 1-10 \n");  
+		number = rand()%10+1;	
+		
+		playGame(number);
+	} while (i<5);	
+	
+	return 0;	
+
+
+}
