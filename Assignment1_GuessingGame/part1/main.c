@@ -8,7 +8,8 @@
 
 int main(){
 	int i, number, current_guess, num_guesses;
-	
+	int array[i];
+
 	srand((unsigned)time(NULL));	
 
 	for (i=0; i<5; i++){    	
@@ -22,7 +23,7 @@ int main(){
 		do{
 			printf("Make a guess: ");
 			scanf("%d", &current_guess);
-			num_guesses++;
+			array[i] = num_guesses++;
 
 			if (current_guess > number){
 				printf("No guess lower!\n");
@@ -43,7 +44,7 @@ int main(){
 	printf("***************************\n");
 	for (i=0; i<5; i++){
 		printf("Game %d took you %d guesses\n", i,
-		num_guesses);	
+		array[i]);	
 	}
 	return 0;	
 
