@@ -30,18 +30,19 @@ int playGame(int number){
 }
 
 int main(){
-	int i, number, current_guess, number_of_guesses;		
-	i = 0;
-	i++;
+	int i, number, current_guess, number_of_guesses;
 	
 	srand((unsigned)time(NULL));	
 
-	do{
-		printf("CPU Says: Pick a number 1-10 \n");  
+	for (i=0; i<5; i++){    
+		
+		printf("***************************\n");
+		printf("CPU Says: Pick a number 1-10 \n");
+		printf("***************************\n"); 
 		number = rand()%10+1;	
 		
 		playGame(number);
-	} while (i<5);	
+	}	
 	
 	return 0;	
 
