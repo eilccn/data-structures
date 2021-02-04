@@ -53,8 +53,12 @@ void print_list(node_t* node){
 }
 
 void free_list(node_t* node){
-	if (node == NULL){
-		return;
+	node_t* iterator = node;
+	while(iterator != NULL){
+		if (node == NULL){
+			return;
+		iterator = iterator->next;
+		}
 	}
 }
 
@@ -68,6 +72,8 @@ int main(){
 	//print list
 	print_list(redsox);
 
-	//free memory	
+	//free memory
+	free_list(redsox);
+	
     return 0;
 }
