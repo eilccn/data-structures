@@ -1,13 +1,12 @@
 # TODO Please edit the following information in your assignment
 
-- Name: *edit me*
-- How many hours did it take you to complete this assignment? *edit me*
-- Did you collaborate with any other students/TAs/Professors? *edit me*
+- Name: Eileen Chang
+- How many hours did it take you to complete this assignment? 6
+- Did you collaborate with any other students/TAs/Professors? No
 - Did you use any external resources? (Cite them below)
-  - *edit me*
-  - *edit me and add more rows if needed*
-- (Optional) What was your favorite part of the assignment? *edit me*
-- (Optional) How would you improve the assignment? *edit me*
+  - https://stackoverflow.com/questions/35460570/simple-guessing-game-in-c
+- (Optional) What was your favorite part of the assignment? 
+- (Optional) How would you improve the assignment? It would've been helpful to have gotten a little more guidance on how to set up the vim/tmux environment.
 
 # Logistics
 
