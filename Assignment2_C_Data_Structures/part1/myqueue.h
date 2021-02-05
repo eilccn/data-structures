@@ -12,6 +12,9 @@
 #ifndef MYQUEUE_H
 #define MYQUEUE_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 // The main data structure for the queue
 struct queue{
 	unsigned int back;	    // The next free position in the queue
@@ -31,7 +34,14 @@ typedef struct queue queue_t;
 // The queue should be initialized with data on
 // the heap.
 queue_t* create_queue(unsigned int _capacity){
-	queue_t* myQueue = NULL;
+	queue_t* myQueue = 0;
+	myQueue = (queue_t*)malloc(_capacity * sizeof(queue_t));
+
+	myQueue->data = (int*)malloc(_capacity * sizeof(int));
+	myQueue->capacity = _capacity;
+	myQueue->front = 0;
+	myQueue->back = -1;
+	myQueue->size = 0;
 
 	return myQueue;
 }
@@ -41,8 +51,11 @@ queue_t* create_queue(unsigned int _capacity){
 // Returns 1 if true (The queue is completely empty)
 // Returns 0 if false (the queue has at least one element enqueued)
 int queue_empty(queue_t* q){
-
-	return 0;
+	if (q->front == q->back){
+		return 1;
+	}
+	else
+		return 0;
 }
 
 // Queue Full
@@ -50,8 +63,11 @@ int queue_empty(queue_t* q){
 // Returns 1 if true (The queue is completely full)
 // Returns 0 if false (the queue has more space available to enqueue items)
 int queue_full(queue_t* q){
-
-	return 0;
+	if (q->size == q->capacity){
+		return 1;
+	}
+	else
+		return 0;
 }
 
 // Enqueue a new item
@@ -59,7 +75,14 @@ int queue_full(queue_t* q){
 // Returns a -1 if the operation fails (otherwise returns 0 on success).
 // (i.e. if the queue is full that is an error).
 int queue_enqueue(queue_t* q, int item){
-		return -1; // Note: you should have two return statements in this function.
+	if (q == 0 || q->size == q->capacity){
+		return -1;
+	}
+
+	q->back = (q->back + 1) % q->capacity;
+	q->data[q->back] = item;
+	q->size++; 
+	return 0; // Note: you should have two return statements in this function.
 }
 
 // Dequeue an item
@@ -67,8 +90,14 @@ int queue_enqueue(queue_t* q, int item){
 // removes an item from the queue.
 // Removing from an empty queue should crash the program, call exit(1)
 int queue_dequeue(queue_t *q){
+	if (queue_empty(q)){
+		exit(1);
+	}
+	
+	q->front = (q->front +1) % q->capacity;
+	q->size--;
 
-		return 99999; // Note: This line is a filler so the code compiles.
+	return 99999; // Note: This line is a filler so the code compiles.
 }
 
 
@@ -77,7 +106,11 @@ int queue_dequeue(queue_t *q){
 // A queue that has not been previously created will crash the program.
 // (i.e. A NULL queue cannot return the size, call exit(1))
 unsigned int queue_size(queue_t* q){
-	return 0;
+	if (q == 0){
+		exit(1);
+	}
+	else	
+		return q->size;
 }
 
 
@@ -85,7 +118,15 @@ unsigned int queue_size(queue_t* q){
 // Removes a queue and all of its elements from memory.
 // This should be called before the proram terminates.
 void free_queue(queue_t* q){
+	if (q == 0){
+		return;
+	}	
 
+	if (q->data != 0){
+		free(q->data);
+	}
+	
+	free(q);
 }
 
 
