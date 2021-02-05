@@ -5,7 +5,7 @@
 - Did you collaborate with any other students/TAs/Professors?
 - Did you use any external resources? (Cite them below)
   - https://www.techiedelight.com/circular-queue-implementation-c/
-  - 92c7b0193326
+  - https://towardsdatascience.com/circular-queue-or-ring-buffer-92c7b0193326
 - (Optional) What was your favorite part of the assignment? Researching the circular buffer and learning about its advantages when it comes to buffering data streams and memory management.
 - (Optional) How would you improve the assignment? A short introduction to the circular buffer in lecture.
 
