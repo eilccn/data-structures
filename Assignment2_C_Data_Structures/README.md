@@ -1,13 +1,13 @@
 # TODO Please edit the following information in your assignment
 
-- Name:
-- How many hours did it take you to complete this assignment?
+- Name: Eileen Chang
+- How many hours did it take you to complete this assignment? 12 
 - Did you collaborate with any other students/TAs/Professors?
 - Did you use any external resources? (Cite them below)
-  - tbd
-  - tbd
-- (Optional) What was your favorite part of the assignment?
-- (Optional) How would you improve the assignment?
+  - https://www.techiedelight.com/circular-queue-implementation-c/
+  - https://towardsdatascience.com/circular-queue-or-ring-buffer-92c7b0193326
+- (Optional) What was your favorite part of the assignment? Researching the circular buffer and learning about its advantages with : buffering data streams and memory management. 
+- (Optional) How would you improve the assignment? An introduction to the circular buffer in lecture
 
 # Logistics
 
