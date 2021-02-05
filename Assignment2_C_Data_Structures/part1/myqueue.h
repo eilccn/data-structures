@@ -34,16 +34,20 @@ typedef struct queue queue_t;
 // The queue should be initialized with data on
 // the heap.
 queue_t* create_queue(unsigned int _capacity){
-	queue_t* myQueue = 0;
-	myQueue = (queue_t*)malloc(_capacity * sizeof(queue_t));
+	queue_t* myQueue = (queue_t*)malloc(sizeof(queue_t));
+	
+	if (myQueue == 0){
+		return 0;
+	} else {
 
-	myQueue->data = (int*)malloc(_capacity * sizeof(int));
-	myQueue->capacity = _capacity;
-	myQueue->front = 0;
-	myQueue->back = -1;
-	myQueue->size = 0;
+		myQueue->data = (int*)malloc(_capacity * sizeof(int));
+		myQueue->capacity = _capacity;
+		myQueue->front = 0;
+		myQueue->back = -1;
+		myQueue->size = 0;
 
-	return myQueue;
+		return myQueue;
+	}
 }
 
 // Queue Empty
@@ -51,11 +55,11 @@ queue_t* create_queue(unsigned int _capacity){
 // Returns 1 if true (The queue is completely empty)
 // Returns 0 if false (the queue has at least one element enqueued)
 int queue_empty(queue_t* q){
-	if (q->front == q->back){
+	if (q->size == 0){
 		return 1;
-	}
-	else
+	} else {
 		return 0;
+	}	
 }
 
 // Queue Full
@@ -65,9 +69,9 @@ int queue_empty(queue_t* q){
 int queue_full(queue_t* q){
 	if (q->size == q->capacity){
 		return 1;
-	}
-	else
+	} else {
 		return 0;
+	}
 }
 
 // Enqueue a new item
@@ -77,12 +81,12 @@ int queue_full(queue_t* q){
 int queue_enqueue(queue_t* q, int item){
 	if (q == 0 || q->size == q->capacity){
 		return -1;
+	} else {
+		q->back = (q->back + 1) % q->capacity;
+		q->data[q->back] = item;
+		q->size++; 
+		return 0; // Note: you should have two return statements in this function.
 	}
-
-	q->back = (q->back + 1) % q->capacity;
-	q->data[q->back] = item;
-	q->size++; 
-	return 0; // Note: you should have two return statements in this function.
 }
 
 // Dequeue an item
@@ -90,14 +94,15 @@ int queue_enqueue(queue_t* q, int item){
 // removes an item from the queue.
 // Removing from an empty queue should crash the program, call exit(1)
 int queue_dequeue(queue_t *q){
-	if (queue_empty(q)){
+	if (q==0 || queue_empty(q)==1){
 		exit(1);
-	}
-	
-	q->front = (q->front +1) % q->capacity;
-	q->size--;
+	} else {
+		int item = q->data[q->front];
+		q->front = (q->front +1) % q->capacity;
+		q->size--;
 
-	return 99999; // Note: This line is a filler so the code compiles.
+		return item; // Note: This line is a filler so the code compiles.
+	}
 }
 
 
@@ -108,9 +113,9 @@ int queue_dequeue(queue_t *q){
 unsigned int queue_size(queue_t* q){
 	if (q == 0){
 		exit(1);
-	}
-	else	
+	} else {	
 		return q->size;
+	}
 }
 
 
