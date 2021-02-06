@@ -35,6 +35,9 @@ Circular queues are used quite a bit in operating systems and high performance s
 # TODO: Put your answer here
 
 A basic queue is a data structure that implements First In First Out ordering, and a circular queue is a queue with a maximum size capacity that loops back over itself. Circular queues are often used when the input and output to data streams occur at different rates, and some examples of this includes buffering data streams, memory management, and CPU scheduling. The advantage of using a ring buffer is that it allows for a fast way to store data in a FIFO ordering with a maximum set size. It also doesn't cause memory leaksand it conserves memory since it only stores up to a fixed capacity. Regular queues don't have a maximum capacity so it would take up a lot more memory. Due to its simplicity, ring buffers are also easy to test and data also doesn't need to be copied around. 
+
+Ring buffers are typically used when the input and output to a channel occur at different speeds. An example of this is message buffers because a network might be slower than the speed of the programs that relay the messages. A ring buffer allows for the data to be written and sent out when the network is available again. Since ring buffers don't use dynamic memory, its advantage lies in its simplicity and effectiveness - it doesn't need to be reorganized and it doesn't copy data, which makes it easy to trust. The disadvantage to using ring buffers is that its capacity is fixed so you need to know how much memory you'll need for your program.
+
 # Unit Tests
 
 A unit test is a standalone test that checks for the correctness of a specific use case in your code. In our case, we are testing if we have a working queue implementation. A sample unit tests is given:
