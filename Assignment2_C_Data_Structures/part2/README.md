@@ -36,8 +36,7 @@ For this assignment, our 'stack' library is quite small, so we will implement th
 We are going to talk about stacks quite a lot in this course, so it will be important to understand them. Do a little outside research, and edit this section of the readme answering specifically: Why is a stack useful and/or when should it be used?
 
 # TODO: Put your answer here
-
-*My answer is ...*
+Stacks are useful when the order of actions is important because it implements in a Last In First Out structure. This sort of data structure is helpful in situations where a program might need to reverse, undo/redo, backtrack, call stack, and so on. By the definition of LIFO, reversals, such as when a string needs to be reversed, a data stack can just push() each character onto the stack then pop() each character off. Undo/redo situations are necessary for situations where a user might want to undo or redo an action -- the current state of the program can be put onto a stack each time a change is made and in order to undo, pop() can remove the last change. Backtracking also requires stacks, such as in a browser where each URL page a user visits is placed onto a stack and they can pop() the current page in order to go back to the last page they wre on. Lastly, data stacks are often used to execute code where a function might be called, added to the call-stack, then removed once it's completed.
 
 # Unit Tests
 
