@@ -1,22 +1,17 @@
 # TODO Please edit the following information in your assignment
 
 - Name: Eileen Chang
-<<<<<<< HEAD
 - How many hours did it take you to complete this assignment? 12 
-=======
 - How many hours did it take you to complete this assignment? 12
->>>>>>> ccebd0e12328693d10675bff5c48fca979323b19
 - Did you collaborate with any other students/TAs/Professors?
 - Did you use any external resources? (Cite them below)
   - https://www.techiedelight.com/circular-queue-implementation-c/
   - https://towardsdatascience.com/circular-queue-or-ring-buffer-92c7b0193326
-<<<<<<< HEAD
+  - https://www.zentut.com/c-tutorial/c-stack-using-pointers/
 - (Optional) What was your favorite part of the assignment? Researching the circular buffer and learning about its advantages with : buffering data streams and memory management. 
 - (Optional) How would you improve the assignment? An introduction to the circular buffer in lecture
-=======
 - (Optional) What was your favorite part of the assignment? Researching the circular buffer and learning about its advantages when it comes to buffering data streams and memory management.
 - (Optional) How would you improve the assignment? A short introduction to the circular buffer in lecture.
->>>>>>> ccebd0e12328693d10675bff5c48fca979323b19
 
 # Logistics
 
