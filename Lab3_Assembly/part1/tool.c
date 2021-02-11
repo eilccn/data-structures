@@ -4,46 +4,79 @@
 #include <string.h>
 #include <stdlib.h>
 
-//int sum(int arr[], int n){
-//	int sum = 0;
-//	for (int i=0; i<n; i++){
-//		sum+= arr[i];
-//		return sum;
-//	}
-//}
 
-int main(int argc, char* argv[]){
+int main(int argc, char** argv){
 	
 	FILE* input = fopen(argv[1], "r");
 	
-	char buf[64] = ""; 
+	char buf[64]; 
 	char* words[10] = {"ADD", "SUB", "MUL", "DIV", "MOV",
-			"LEA", "PUS", "POP", "RET", NULL};
-	int freq[100] = {}; // Word frequency array
+			"LEA", "PUSH", "POP", "RET", NULL};
 
-
-	while (fscanf(input, "%s[^\n]", buf) == 1){
+	// Initialize Counters
+	int add_counter = 0;
+	int sub_counter = 0;
+	int mul_counter = 0;
+	int div_counter = 0;
+	int mov_counter = 0;
+	int lea_counter = 0;
+	int push_counter = 0;
+	int pop_counter = 0;
+	int ret_counter = 0;
+	
+	while (fscanf(input, "%s", buf) != EOF){
 		
-		int i;
-		for (i=0; words[i]; i++)
-			if (strstr(buf, words[i]) != NULL)
-				break;
-		
-
-		if (words[i]) {
-			freq[i]++;
-			continue;
+		// Counts for each word
+		if (strstr(buf, "ADD") != NULL){
+			add_counter++;
 		}
-
-		for (int i=0; i<8; i++){
-			printf("%s = %d\n", words[i], freq[i]);
-			//int n = sizeof(freq) / sizeof(freq[0]);
-			//("\nTotal Instructions = ", sum(freq, n))		
-			//printf("\nTotal Cycles = ", 
+		else if (strstr(buf, "SUB") != NULL){
+			sub_counter++;
 		}
+		else if (strstr(buf, "MUL") != NULL){
+                        mul_counter++;
+                }
+                else if (strstr(buf, "DIV") != NULL){
+                        div_counter++;
+                }
+		else if (strstr(buf, "MOV") != NULL){
+                        mov_counter++;
+                }
+                else if (strstr(buf, "LEA") != NULL){
+                        lea_counter++;
+                }
+		else if (strstr(buf, "PUSH") != NULL){
+                        push_counter++;
+                }
+                else if (strstr(buf, "POP") != NULL){
+                        pop_counter++;
+                }
+		else if (strstr(buf, "RET") != NULL){
+                        ret_counter++;
+                }
+
 	}
+	
 	fclose(input);
-		
+	
+	// Print Results	
+	printf("ADD %d\n", add_counter);
+	printf("SUB %d\n", sub_counter);	
+	printf("MUL %d\n", mul_counter);
+        printf("DIV %d\n", div_counter);
+	printf("MOV %d\n", mov_counter);
+        printf("LEA %d\n", lea_counter);
+	printf("PUSH %d\n", push_counter);
+        printf("POP %d\n", pop_counter);
+	printf("RET %d\n", ret_counter);
+
+	//Print Total Counts
+	int sum;
+	sum = add_counter + sub_counter + mul_counter +
+	div_counter + mov_counter + lea_counter +
+        push_counter + pop_counter +  ret_counter;
+
+	printf("Total Instructions %d", sum);  
 
 return 0;
 }
