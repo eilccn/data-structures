@@ -4,33 +4,42 @@
 #include <string.h>
 #include <stdlib.h>
 
-enum{MAXW = 1000};
+//int sum(int arr[], int n){
+//	int sum = 0;
+//	for (int i=0; i<n; i++){
+//		sum+= arr[i];
+//		return sum;
+//	}
+//}
 
-int main(int argc, char** argv){
+int main(int argc, char* argv[]){
 	
 	FILE* input = fopen(argv[1], "r");
 	
-	char buf[4]; 
-	char* words[] = {"ADD", "SUB", "MUL", "DIV", "MOV",
+	char buf[64] = ""; 
+	char* words[10] = {"ADD", "SUB", "MUL", "DIV", "MOV",
 			"LEA", "PUS", "POP", "RET", NULL};
-	int freq[MAXW] = {0}, n=0; // Word frequency array
+	int freq[100] = {}; // Word frequency array
 
 
-	while ((fscanf(input, "%s", buf)) != EOF){
+	while (fscanf(input, "%s[^\n]", buf) == 1){
+		
 		int i;
-		for (i=0; words[i]; i++){
-			if (strcmp(words[i], buf) == 0)
+		for (i=0; words[i]; i++)
+			if (strstr(buf, words[i]) != NULL)
 				break;
-		}
+		
 
 		if (words[i]) {
 			freq[i]++;
 			continue;
 		}
 
-		for (int i=0; words[i]; i++){
+		for (int i=0; i<8; i++){
 			printf("%s = %d\n", words[i], freq[i]);
-			free(words[i]);
+			//int n = sizeof(freq) / sizeof(freq[0]);
+			//("\nTotal Instructions = ", sum(freq, n))		
+			//printf("\nTotal Cycles = ", 
 		}
 	}
 	fclose(input);
