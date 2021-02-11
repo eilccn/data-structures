@@ -71,12 +71,17 @@ int main(int argc, char** argv){
 	printf("RET %d\n", ret_counter);
 
 	//Print Total Counts
-	int sum;
+	int sum, cycles;
 	sum = add_counter + sub_counter + mul_counter +
 	div_counter + mov_counter + lea_counter +
         push_counter + pop_counter +  ret_counter;
 
 	printf("Total Instructions %d", sum);  
+	
+	cycles = ((add_counter*1) + (sub_counter*1) + (mul_counter*2) +
+        (div_counter*4) + (mov_counter*1) + (lea_counter*1) +
+        (push_counter*1) + (pop_counter*1) + (ret_counter*1));
+	printf("Total Cycles %d", cycles);
 
 return 0;
 }
