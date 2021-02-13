@@ -281,7 +281,7 @@ int dll_size(dll_t* t){
 // Removes a DLL and all of its elements from memory.
 // This should be called before the proram terminates.
 void free_dll(dll_t* t){
-
+	free(t);
 }
 
 
