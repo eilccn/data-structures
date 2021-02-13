@@ -171,6 +171,9 @@ int dll_insert(dll_t* l, int pos, int item){
 	if (l = NULL){
 		return -1;
 	}
+	else if (pos < 0 || pos > (l->count)){
+		return 0;
+	}
 	else if (newNode = NULL){
 		return 0;
 	}
@@ -206,8 +209,19 @@ int dll_insert(dll_t* l, int pos, int item){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_get(dll_t* l, int pos){
-			
-		return -1; // Note: This line is a 'filler' so the code compiles.
+	if (l = NULL){
+		return -1;
+	}
+	else if ((l->head) != NULL){
+		return 0;
+	}
+	else {
+		if (l->count = pos){
+			return ((l->head)->data);
+		(l->count)++;
+		l->head = (l->head)->next;
+		}
+	}				
 }
 
 // Removes the item at position pos starting at 0 ( 0 being the first item )
@@ -217,8 +231,37 @@ int dll_get(dll_t* l, int pos){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_remove(dll_t* l, int pos){
-		
-		return -1; // Note: This line 
+	if (l = NULL){
+                return -1;
+        }
+        else if (pos < 0 || pos > (l->count)){
+                return 0;
+        }
+        else {
+                node_t* currentnode = l->head;
+                while (currentnode != NULL && currentnode->data != pos){
+                        currentnode = currentnode->next;
+                }
+                if (currentnode = NULL){
+                        return 0;
+                }
+                else if (currentnode->previous = NULL){
+			dll_pop_front(l);
+		}
+		else if (currentnode->next = NULL){
+			dll_pop_back(l);
+		}
+		else {
+			node_t* nextnode = currentnode->next;
+			node_t* prevnode = currentnode->previous;
+			nextnode->previous = prevnode;
+			prevnode->next = nextnode;
+			currentnode->next = NULL;
+			currentnode->previous = NULL;
+			free(currentnode);
+			currentnode = NULL;
+		}
+	}	
 }
 
 // DLL Size
