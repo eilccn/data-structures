@@ -129,7 +129,7 @@ int dll_pop_front(dll_t* t){
 		return 0;
 	}
 	else if (t->head != NULL){
-		return (t->head);
+		return ((t->head)->data);
 		(t->head) = (t->head)->next;
 		free(t->head);
 		if (t->head != NULL);
@@ -149,7 +149,7 @@ int dll_pop_back(dll_t* t){
                 return 0;
         }
         else if (t->tail != NULL){
-		return (t->tail);
+		return ((t->tail)->data);
 		(t->tail) = (t->tail)->previous;
 		free(t->tail);
 		if (t->tail != NULL);
@@ -206,7 +206,7 @@ int dll_insert(dll_t* l, int pos, int item){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_get(dll_t* l, int pos){
-		
+			
 		return -1; // Note: This line is a 'filler' so the code compiles.
 }
 
@@ -218,7 +218,7 @@ int dll_get(dll_t* l, int pos){
 // Assume no negative numbers in the list or the number zero.
 int dll_remove(dll_t* l, int pos){
 		
-		return -1; // Note: This line is a 'filler' so the code compiles.
+		return -1; // Note: This line 
 }
 
 // DLL Size
