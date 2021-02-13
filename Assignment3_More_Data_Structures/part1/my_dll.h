@@ -30,6 +30,17 @@ typedef struct DLL{
         node_t * tail;          //tail points to the last node in our DLL.
 }dll_t;
 
+// Create new node
+// Return pointer to next node and previous node
+node_t* new_node(int data){
+	node_t* newNode = (node_t*)malloc(sizeof(node_t));
+	newNode->data = data;
+	newNode->previous = NULL;
+	newNode->next = NULL;
+	
+	return newNode;
+}	
+
 // Creates a DLL
 // Returns a pointer to a newly created DLL.
 // The DLL should be initialized with data on the heap.
@@ -37,9 +48,13 @@ typedef struct DLL{
 // The DLLs fields should also be initialized to default values.
 // Returns NULL if we could not allocate memory.
 dll_t* create_dll(){
-	// Modify the body of this function as needed.
-	dll_t* myDLL= NULL;	
-
+	// Modify the body of this function as needed.	
+	dll_t* myDLL = (dll_t*)malloc(sizeof(dll_t));	
+	
+	myDLL->count = 0;
+	myDLL->head = NULL;
+	myDLL->tail = NULL;
+	
 	return myDLL;
 }
 
@@ -49,7 +64,15 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
-	return -1;
+	if (l->count=0){
+		return 1;
+	}
+	else if (l->count != 0){
+		return 0;
+	}
+	else if (l = NULL){
+		return -1;
+	}
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -58,7 +81,18 @@ int dll_empty(dll_t* l){
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
+	node_t* newNode = new_node(item);
+	if (l == NULL){
 		return -1;
+	}
+	else if (newNode = NULL){
+		return 0;
+	}
+
+	(l->head)->previous = newNode;
+	newNode->next = l->head;
+	l->head = newNode;		
+	return 1;
 }
 
 // push a new item to the end of the DLL (after the last node in the list).
@@ -67,7 +101,20 @@ int dll_push_front(dll_t* l, int item){
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
 int dll_push_back(dll_t* l, int item){
-		return -1; 
+	node_t* newNode = new_node(item);
+	if (l == NULL){		
+		return -1;
+	}
+	else if (newNode = NULL){
+		return 0;
+	}
+	
+	while ((l->head)->next != NULL){
+		(l->head) = (l->head)->next;
+	}
+	(l->head)->next = newNode;
+	newNode->previous = l->head;
+	return 1; 
 }
 
 // Returns the first item in the DLL and also removes it from the list.
@@ -75,8 +122,19 @@ int dll_push_back(dll_t* l, int item){
 // Returns a -1 if the DLL is NULL. 
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_front(dll_t* t){
-
-		return -1; // Note: This line is a 'filler' so the code compiles.
+	if (t= NULL){
+		return -1;
+	}
+	else if (t->count = 0){
+		return 0;
+	}
+	else if (t->head != NULL){
+		return (t->head);
+		(t->head) = (t->head)->next;
+		free(t->head);
+		if (t->head != NULL);
+			(t->head)->previous = NULL;
+	}
 }
 
 // Returns the last item in the DLL, and also removes it from the list.
@@ -84,8 +142,19 @@ int dll_pop_front(dll_t* t){
 // Returns a -1 if the DLL is NULL. 
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_back(dll_t* t){
-
-		return -1; // Note: This line is a 'filler' so the code compiles.
+	if (t= NULL){
+                return -1;
+        }
+        else if (t->count = 0){
+                return 0;
+        }
+        else if (t->tail != NULL){
+		return (t->tail);
+		(t->tail) = (t->tail)->previous;
+		free(t->tail);
+		if (t->tail != NULL);
+			(t->tail)->next = NULL;
+	}			
 }
 
 // Inserts a new node before the node at the specified position.
@@ -97,7 +166,7 @@ int dll_pop_back(dll_t* t){
 //   (inserting at the size should be equivalent as calling push_back).
 // Returns -1 if the list is NULL
 int dll_insert(dll_t* l, int pos, int item){
-		
+			
 		return -1; // Note: This line is a 'filler' so the code compiles.
 }
 
@@ -128,8 +197,13 @@ int dll_remove(dll_t* l, int pos){
 // Queries the current size of a DLL
 // Returns -1 if the DLL is NULL.
 int dll_size(dll_t* t){
-	
-		return -1; // Note: This line is a 'filler' so the code compiles.
+	if (t = NULL){
+		return -1;
+	}
+	for (t->head; (t->head) != NULL; (t->head) = (t->head)->next){
+		return (t->count)++; 
+
+	}			
 }
 
 // Free DLL
