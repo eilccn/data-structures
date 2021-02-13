@@ -64,15 +64,13 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
-	if (l->count=0){
+	if ((head = NULL)){
 		return 1;
 	}
-	else if (l->count != 0){
-		return 0;
-	}
-	else if (l = NULL){
+	else if ((l = NULL)){
 		return -1;
 	}
+	return 0;
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -216,7 +214,7 @@ int dll_get(dll_t* l, int pos){
 		return 0;
 	}
 	else {
-		if (l->count = pos){
+		if ((l->count) = pos){
 			return ((l->head)->data);
 		(l->count)++;
 		l->head = (l->head)->next;
@@ -231,7 +229,7 @@ int dll_get(dll_t* l, int pos){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_remove(dll_t* l, int pos){
-	if (l = NULL){
+	if ((l = NULL)){
                 return -1;
         }
         else if (pos < 0 || pos > (l->count)){
@@ -242,10 +240,10 @@ int dll_remove(dll_t* l, int pos){
                 while (currentnode != NULL && currentnode->data != pos){
                         currentnode = currentnode->next;
                 }
-                if (currentnode = NULL){
+                if ((currentnode = NULL)){
                         return 0;
                 }
-                else if (currentnode->previous = NULL){
+                else if ((currentnode->previous = NULL)){
 			dll_pop_front(l);
 		}
 		else if (currentnode->next = NULL){
@@ -268,13 +266,11 @@ int dll_remove(dll_t* l, int pos){
 // Queries the current size of a DLL
 // Returns -1 if the DLL is NULL.
 int dll_size(dll_t* t){
-	if (t = NULL){
+	if ((t->head) = NULL){
 		return -1;
 	}
-	for (t->head; (t->head) != NULL; (t->head) = (t->head)->next){
-		return (t->count)++; 
-
-	}			
+	(t->head) = (t->head)->next;
+	return (t->count)++;			
 }
 
 // Free DLL
