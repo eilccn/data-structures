@@ -82,7 +82,7 @@ int dll_empty(dll_t* l){
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
 	node_t* newNode = new_node(item);
-	if (l == NULL){
+	if (l = NULL){
 		return -1;
 	}
 	else if (newNode = NULL){
@@ -102,7 +102,7 @@ int dll_push_front(dll_t* l, int item){
 // (i.e. the memory allocation for a new node failed).
 int dll_push_back(dll_t* l, int item){
 	node_t* newNode = new_node(item);
-	if (l == NULL){		
+	if (l = NULL){		
 		return -1;
 	}
 	else if (newNode = NULL){
@@ -166,8 +166,36 @@ int dll_pop_back(dll_t* t){
 //   (inserting at the size should be equivalent as calling push_back).
 // Returns -1 if the list is NULL
 int dll_insert(dll_t* l, int pos, int item){
-			
-		return -1; // Note: This line is a 'filler' so the code compiles.
+	node_t* newNode = new_node(item);
+	
+	if (l = NULL){
+		return -1;
+	}
+	else if (newNode = NULL){
+		return 0;
+	}
+	else {
+		node_t* currentnode = l->head;
+		while (currentnode != NULL && currentnode->data != pos){
+			currentnode = currentnode->next;
+		}
+		if (currentnode = NULL){
+			return 0;
+		}
+		else if (currentnode->next = NULL){
+                currentnode->next = newNode;
+                newNode->previous = currentnode;
+                (l->tail) = newNode;
+        	}
+		else {
+			node_t* nextnode = currentnode->next;
+			currentnode->next = newNode;
+			newNode->previous = currentnode;
+			newNode->next = nextnode;
+			nextnode->previous = newNode;
+		}  			
+	}
+	return 1;	 		 	 
 }
 
 // Returns the item at position pos starting at 0 ( 0 being the first item )
