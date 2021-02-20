@@ -80,7 +80,13 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
     if(_hashmap != NULL){
-	//TODO
+	for (int i=0; i<_hashmap->buckets; i++){
+		node_t* iter = _hashmap->arrayOfLists[i];
+		if (iter != NULL){
+			free(iter);
+		}
+	free(_hashmap);
+	}		
     }
 }
 
@@ -96,10 +102,23 @@ void hashmap_delete(hashmap_t* _hashmap){
 int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
  
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	
 	if (_hashmap == NULL){
 		return -999;
 	}
-	return 0;	 
+	
+	while (iter != NULL){
+		if (strcmp(iter->kv->key, key) == 0){
+			return 1;
+		}
+		
+		// Proceed to next key if available
+		iter = iter->next;
+	} 
+
+	// No key match
+	return 0;
 }
 
 // Insert a new key/value pair into a hashmap
@@ -188,22 +207,49 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	// Return if bucket is empty
 	if (iter == NULL){
 		return;
-	}
-	
+	}	
 
 	// Go through each bucket until end is reached or matching key found
 	if (iter->kv->key == NULL){
 		return;
 	}
+
+	node_t* prev;
+	int idx = 0;
+
 	while (iter != NULL){
 		// Check key
 		if (strcmp(iter->kv->key, key) == 0){
-			free(iter->kv->key);
-			free(iter->kv->value);
-			free(iter);
+			// First bucket and no next node
+			if (iter->next == NULL && idx == 0){
+				_hashmap->arrayOfLists[bucket] = NULL;
+			}
+			
+			// First bucket with next node
+			if (iter->next != NULL && idx == 0){
+				_hashmap->arrayOfLists[bucket] = iter->next;
+			}
+
+			// Last bucket
+			if (iter->next != NULL && idx != 0){
+				prev->next = NULL;
+			}
+
+			// Middle bucket
+			if (iter->next != NULL && idx != 0){
+				prev->next = iter->next;
+			}
+			
+			// Free deleted key
+			//free(iter->kv->key);
 
 			return;
 		}
+	// Go to next node
+	prev = iter;
+	iter = prev->next;
+
+	++idx;
 	}
 }
 
@@ -234,7 +280,7 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 		// Check key
 		if (strcmp(iter->kv->key, key) == 0){
 			// Replace value for match found
-			free(iter->kv->value);
+			//free(iter->kv->value);
 			iter->kv->value = malloc(strlen(newValue) + 1);
 			strcpy(iter->kv->value, newValue);
 			return;
@@ -265,23 +311,23 @@ void hashmap_printKeys(hashmap_t* _hashmap){
 	}
 }
 
-int main(){
+//int main(){
 
-	hashmap_t* map = hashmap_create(8);
-	hashmap_insert(map, "red", "10");
-	hashmap_insert(map, "orange", "11");
-	hashmap_insert(map, "yellow", "12");
-	hashmap_insert(map, "green", "13");
-	hashmap_insert(map, "blue", "14");
-	hashmap_insert(map, "pink", "15");
-	hashmap_insert(map, "purple", "16");
-	hashmap_insert(map, "violet", "23");
-	hashmap_insert(map, "black", "23");
-	hashmap_insert(map, "gold", "40");
-	hashmap_insert(map, "silver", "23");
+//	hashmap_t* map = hashmap_create(8);
+//	hashmap_insert(map, "red", "10");
+//	hashmap_insert(map, "orange", "11");
+//	hashmap_insert(map, "yellow", "12");
+//	hashmap_insert(map, "green", "13");
+//	hashmap_insert(map, "blue", "14");
+//	hashmap_insert(map, "pink", "15");
+//	hashmap_insert(map, "purple", "16");
+//	hashmap_insert(map, "violet", "23");
+//	hashmap_insert(map, "black", "23");
+//	hashmap_insert(map, "gold", "40");
+//	hashmap_insert(map, "silver", "23");
 	
-	hashmap_printKeys(map);
+//	hashmap_printKeys(map);
 	
-	return 0;
-}
+//	return 0;
+//}
 #endif
