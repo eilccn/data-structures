@@ -85,7 +85,7 @@ void hashmap_delete(hashmap_t* _hashmap){
 		if (iter != NULL){
 			free(iter);
 		}
-	free(_hashmap);
+	//free(_hashmap);
 	}		
     }
 }
