@@ -180,7 +180,31 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 //  - Search the _hashmap's bucket for the key and then remove it
 // This function should run in average-case constant time
 void hashmap_removeKey(hashmap_t* _hashmap, char* key){
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+
+	// Search for bucket
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+
+	// Return if bucket is empty
+	if (iter == NULL){
+		return;
+	}
 	
+
+	// Go through each bucket until end is reached or matching key found
+	if (iter->kv->key == NULL){
+		return;
+	}
+	while (iter != NULL){
+		// Check key
+		if (strcmp(iter->kv->key, key) == 0){
+			free(iter->kv->key);
+			free(iter->kv->value);
+			free(iter);
+
+			return;
+		}
+	}
 }
 
 // Update a key with a new Value
@@ -203,6 +227,9 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 	
 	// Go through each entry until either end reached
 	// or matching key found
+	if (iter->kv->key == NULL){
+		return;
+	}
 	while (iter != NULL){
 		// Check key
 		if (strcmp(iter->kv->key, key) == 0){
