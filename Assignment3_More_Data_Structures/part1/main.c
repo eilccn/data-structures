@@ -20,9 +20,12 @@
 // ================== Program Entry ===================
 // ====================================================
 int main(){
-    dll_t * dll = create_dll();
     
+	dll_t* test = create_dll();
+    	if (dll_empty(test) = 1){
+		printf("bye");
+	}
+    	free_dll(test);    
     
-    
-    return 0;
+    	return 0;
 }
