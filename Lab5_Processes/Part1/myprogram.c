@@ -10,6 +10,8 @@ int main(){
 	char* myargv[][4] = { {"/bin/ls", "-F", 0},
 			      {"/bin/sh", "-c", "echo testing", 0},
 			      {"/bin/nl", "example1.c", 0} };
+
+
 //	myargv[0][0]="/bin/ls";
 //	myargv[0][1]="-F";
 //	myargv[0][2]=NULL;
