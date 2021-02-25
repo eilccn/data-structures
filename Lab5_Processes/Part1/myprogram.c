@@ -7,8 +7,8 @@
 int main(){
 	int idx;
 
-	char* myargv[][4] = { {"/bin/ls", "-F", 0},
-			      {"/bin/sh", "-c", "echo testing", 0},
+	char* myargv[][4] = { {"/bin/ps", "-F", 0},
+			      {"/bin/sh", "-c", "echo ***Hello***", 0},
 			      {"/bin/nl", "example1.c", 0} };
 
 // Below is my first attempt at writing a 2D array
@@ -31,10 +31,10 @@ int main(){
 			execve(myargv[idx][0], &myargv[idx][0] ,NULL);
 			printf("Child: Should never get here\n");
 			exit(1);
-		} else{
-			wait(NULL);
-			printf("This always prints last\n");
-		}
+		} 
+		
+		wait(NULL);
+		printf("This always prints last\n");
 	}
 
 	return 0;
