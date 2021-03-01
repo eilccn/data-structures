@@ -245,6 +245,64 @@ char **split_line(char *line){
 	return tokens;
 }
 
+// Pipe function
+int pipe_fxn(char **args, char **argspipe){
+	int pipefd[2];
+	pid_t p1, p2;
+
+	if (pipe(pipefd) < 0){
+		printf("\nPipe could not be initialized");
+		exit(EXIT_FAILURE);
+	}
+
+	p1 = fork();
+	if ( p1 < 0){
+		printf("Fork failed");
+		exit(EXIT_FAILURE);
+	}
+
+	if (p1 == 0){
+		// Child 1 executing
+		// Only needs to write at write end
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+
+		if (execvp(args[0], args) < 0){
+			printf("\nCould not execute command 1");
+			exit(0);
+		}
+	
+	} else {
+		// Parent executing
+		p2 = fork();
+
+		if (p2 < 0){
+			printf("\nCould not fork");
+			exit(EXIT_FAILURE);
+		}
+
+		// Child 2 executing
+		// Only needs to read at read end
+		if (p2 == 0){
+			close(pipefd[1]);
+			dup2(pipefd[0], STDIN_FILENO);
+			close(pipefd[0]);
+
+			if (execvp(argspipe[0], argspipe) < 0){
+				printf("\nCould not execute command 2");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			// Parent executing
+			// Waiting for 2 children
+			wait(NULL);
+			wait(NULL);
+		}
+	}
+	return 1;
+}
+
 // Loop for executing shell
 void loop(void){
 	char *line;
