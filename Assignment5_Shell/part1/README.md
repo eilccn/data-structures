@@ -102,21 +102,23 @@ At a high level, implementing mini-shell takes the following components:
 	2. (Edit the readme below with your built-in command)
 
 -----------------------------------------------------
-NAME: 
+NAME:  
 
-*edit me*
+Eileen Chang
 
-SYNOPSIS: 
+SYNOPSIS:
 
-*edit me and add in a short description of the command and its usage*
+A guessing game where the user tries to correctly guess a random number from 1-10.
 
 DESCRIPTION:
 
-*Write a longer description of what he command does*
+The user inputs a number 1-10 and tries to guess the correct number until they get it right. If the us
+er input is wrong, the program gives a hint of "higher" or "lower" in value. When the user guesses cor
+rectly, the program outputs the number of guesses it took for them to guess the correct number.
 
 NOTES:
 
-*Enter two or three sentences (minimum) in how you implemented the built-in command.*
+<time.h> and the srand() operation was used to generate a random number each time the game is played. A counter is implemented in order to keep track of the number of times the user needs to guess in order to arrive at the correct number. A do-while loop is implemented that continues to ask the user for a number input so long as their input does not equal the correct number. Inside of the do-while loop are a set of if-else statements that print hints on whether their guess was higher or lower than the correct number. Once they guess correctly, a print statement tells the user how many guesses it took for them to guess correctly.
 
 -----------------------------------------------------
 
