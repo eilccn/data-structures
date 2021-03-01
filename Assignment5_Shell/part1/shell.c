@@ -150,9 +150,8 @@ int execute(char **args){
 	return start_program(args);
 }
 
-// Reads line of input from stdin
+// reads line of input from stdin
 // returns: line of input from stdin
-
 char *read_line(void){
 #ifdef GETLINE
 	char *line = NULL;
@@ -242,7 +241,7 @@ char **split_line(char *line){
 	return tokens;
 }
 
-// Loop for executing shell
+// loop for executing shell
 void loop(void){
 	char *line;
 	char **args;
@@ -259,7 +258,7 @@ void loop(void){
 	} while (status);
 }
 
-// Main
+// main
 int main(int argc, char *argv){
 
 	loop();
