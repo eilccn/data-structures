@@ -104,7 +104,7 @@ int game_cmd(char **args){
 	return 1;
 }
 
-// starts a program and waits for it to terminate
+// Starts a program and waits for it to terminate
 // input: args Null terminated list of arguments (including program)
 // return: always returns 1, continues to execution
 int start_program(char **args){
@@ -131,7 +131,7 @@ int start_program(char **args){
 	return 1;
 }
 
-// executes a program
+// Executes a program
 // input: args Null terminated list of arguments
 // returns 1 if the shell should keep running, 0 if it should terminate
 int execute(char **args){
@@ -150,7 +150,8 @@ int execute(char **args){
 	return start_program(args);
 }
 
-// reads line of input from stdin
+// Reads line of input from stdin
+// input: line input from stdin
 // returns: line of input from stdin
 char *read_line(void){
 #ifdef GETLINE
@@ -204,7 +205,8 @@ char *read_line(void){
 #endif
 }
 
-// splits line into tokens
+// Splits line into tokens
+// input: line
 // returns: null terminated array of tokens
 #define TOK_BUFFER 64
 #define TOK_DELIM "\t\r\n\a"
@@ -241,7 +243,7 @@ char **split_line(char *line){
 	return tokens;
 }
 
-// loop for executing shell
+// Loop for executing shell
 void loop(void){
 	char *line;
 	char **args;
@@ -258,7 +260,7 @@ void loop(void){
 	} while (status);
 }
 
-// main
+// Main
 int main(int argc, char *argv){
 
 	loop();
