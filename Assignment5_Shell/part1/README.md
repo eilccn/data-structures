@@ -104,7 +104,7 @@ At a high level, implementing mini-shell takes the following components:
 -----------------------------------------------------
 NAME:  
 
-Eileen Chang
+Guessing Game, game_cmd
 
 SYNOPSIS:
 
