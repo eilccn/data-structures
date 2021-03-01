@@ -62,46 +62,48 @@ int exit_cmd(char **args){
 // they will do this until they have completed 5 games
 // return: summary of how many guesses the user made for each game
 int game_cmd(char **args){
-	int i, number, current_guess, num_guesses;
-	int array[i];
+	int number, current_guess, num_guesses;
 
 	srand((unsigned)time(NULL));	
 
-	for (i=0; i<5; i++){    	
-		printf("***************************\n");
-		printf("CPU Says: Pick a number 1-10 \n");
-		printf("***************************\n");
+	printf("***************************\n");
+	printf("CPU Says: Pick a number 1-10 \n");
+	printf("***************************\n");
  
-		number = rand()%10+1;	
-		num_guesses = 0;
+	number = rand()%10+1;	
+	num_guesses = 0;
 	
-		do{
-			printf("Make a guess: ");
-			scanf("%d", &current_guess);
-			array[i] = num_guesses++;
+	do{
+		printf("Make a guess: ");
+		scanf("%d", &current_guess);
+		num_guesses++;
+		
+		if (current_guess > number){
+			printf("No guess lower!\n");
+		}
 
-			if (current_guess > number){
-				printf("No guess lower!\n");
-			}
+		else if (current_guess < number){
+			printf("No guess higher!\n");
+		}	
 
-			else if (current_guess < number){
-				printf("No guess higher!\n");
-			}	
-
-			else {
-				printf("You got it!\n");
-			}
-		} while (current_guess != number);
-	}
+		else {
+			printf("You got it!\n");
+		}
+	} while (current_guess != number);
 	
 	printf("***************************\n");
 	printf("Here are your results!\n");
 	printf("***************************\n");
-	for (i=0; i<5; i++){
-		printf("Game %d took you %d guesses\n", i,
-		array[i]);	
-	}
+	
+	printf("It took you %d guesses\n", num_guesses);
 	return 1;
+}
+
+// Signal handler
+static volatile sig_atomic_t keep_running = 1;
+static void signal_handler(int _){
+	(void)_;
+	keep_running = 0;	
 }
 
 // Starts a program and waits for it to terminate
@@ -115,7 +117,7 @@ int start_program(char **args){
 	
         if (pid == 0){     // for the child process
                 if (execvp(args[0], args) == -1){
-                        printf("Error: forking child process failed\n");
+                        printf("Command not found--Did you mean something else?\n");
                         exit(1);
                 }
 	
@@ -263,7 +265,9 @@ void loop(void){
 // Main
 int main(int argc, char *argv){
 
-	loop();
+
+	loop();	
+
 
 	return EXIT_SUCCESS;
 
