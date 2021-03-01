@@ -7,7 +7,6 @@
 #include <sys/types.h>
 #include <time.h>
 
-#define BUFFER 80
 
 // Functions for built in commands
 int cd_cmd(char **args);
@@ -23,6 +22,7 @@ int (*builtin_fxn[]) (char **) = {
 	&cd_cmd, &help_cmd, &exit_cmd, &game_cmd
 };
 
+// Returns number of builtin functions
 int num_builtins(){
        return sizeof(builtin_str) / sizeof(char *);
 }
@@ -55,22 +55,6 @@ int help_cmd(char **args){
 // return: always returns 0, terminates execution
 int exit_cmd(char **args){
 	return 0;
-}
-
-
-// parse function
-void parse(char *line, char **argv){
-	while (*line != '\0'){
-		
-		while (*line == ' ' || *line == '\t' || *line == '\n')
-			*line++ = '\0';
-			*argv++ = line;
-
-		while (*line != '\0' && *line != ' ' && *line != '\t' && *line != '\n')
-			line++;
-	}
-	
-	*argv = '\0';
 }
 
 // guessing game builtin command
@@ -221,10 +205,10 @@ char *read_line(void){
 #endif
 }
 
-#define TOK_BUFFER 64
-#define TOK_DELIM "\t\r\n\a"
 // splits line into tokens
 // returns: null terminated array of tokens
+#define TOK_BUFFER 64
+#define TOK_DELIM "\t\r\n\a"
 char **split_line(char *line){
 	int bufsize = TOK_BUFFER, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char*));
@@ -259,7 +243,6 @@ char **split_line(char *line){
 }
 
 // Loop for executing shell
-
 void loop(void){
 	char *line;
 	char **args;
@@ -276,6 +259,7 @@ void loop(void){
 	} while (status);
 }
 
+// Main
 int main(int argc, char *argv){
 
 	loop();
