@@ -89,6 +89,7 @@ int game_cmd(char **args){
 		else {
 			printf("You got it!\n");
 		}
+
 	} while (current_guess != number);
 	
 	printf("***************************\n");
@@ -100,10 +101,9 @@ int game_cmd(char **args){
 }
 
 // Signal handler
-static volatile sig_atomic_t keep_running = 1;
-static void signal_handler(int _){
-	(void)_;
-	keep_running = 0;	
+void signal_handler(int sig){
+	write(1, " mini-shell terminated\n", 23);
+	exit(0);	
 }
 
 // Starts a program and waits for it to terminate
@@ -252,6 +252,8 @@ void loop(void){
 	int status;
 
 	do {
+	        signal(SIGINT, &signal_handler);
+
 		printf("mini-shell> ");
 		line = read_line();
 		args = split_line(line);
@@ -264,7 +266,7 @@ void loop(void){
 
 // Main
 int main(int argc, char *argv){
-
+		
 
 	loop();	
 
