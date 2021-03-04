@@ -20,9 +20,9 @@ void paint(int workID){
 	// Each artist has one row to paint on
 	// Each artist paints one pixel at a time 
 	// with an RGB value
-	for (int i=0; i < 64*3; i++){
-		for (int j=0; j < 64; j++){
-			colors[workID][i] = (i + j) % 255;
+	for (int i=0; i < 64; i++){
+		for (int j=0; j < 64*3; j++){
+			colors[workID][j] = (i + j) % 255;
 		}
 	}
 }
@@ -56,10 +56,10 @@ int main(int argc, char** argv){
 	fputs("P3\n", fp);
 	fputs("64 64\n", fp);
 	fputs("255\n", fp);
-        for (int i=0; i < 64*3; i++){
-                for (int j=0; j < 64; j++){
-                        colors[j][i] = (i + j) % 255;
-    			fprintf(fp, "%d", colors[j][i]);
+        for (int i=0; i < 64; i++){
+                for (int j=0; j < 64*3; j++){
+                        colors[i][j] = (i + j) % 255;
+    			fprintf(fp, "%d", colors[i][j]);
 			fputs(" ", fp);
 		}
 		fputs("\n", fp);
