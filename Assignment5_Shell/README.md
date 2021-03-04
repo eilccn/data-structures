@@ -1,13 +1,13 @@
 # TODO Please edit the following information in your assignment
 
-- Name:
-- How many hours did it take you to complete this assignment?
-- Did you collaborate with any other students/TAs/Professors?
+- Name: Eileen Chang
+- How many hours did it take you to complete this assignment? 3 days
+- Did you collaborate with any other students/TAs/Professors? No
 - Did you use any external resources? (Cite them below)
-  - tbd
-  - tbd
-- (Optional) What was your favorite part of the assignment?
-- (Optional) How would you improve the assignment?
+  - http://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/fork/exec.html
+  - https://brennan.io/2015/01/16/write-a-shell-in-c/
+- (Optional) What was your favorite part of the assignment? Creating the builtin functions
+- (Optional) How would you improve the assignment? I know we had example6.c in our lab to help with the pipe implenentation but it would've been helpful to have had perhaps a canvas video going over pipe implementation in general.  
 
 # Logistics
 
