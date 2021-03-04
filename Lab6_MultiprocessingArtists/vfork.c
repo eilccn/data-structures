@@ -22,7 +22,7 @@ void paint(int workID){
 	// with an RGB value
 	for (int i=0; i < 64*3; i++){
 		for (int j=0; j < 64; j++){
-			colors[workID][i] = (i + j) & 255;
+			colors[workID][i] = (i + j) % 255;
 		}
 	}
 }
@@ -58,8 +58,8 @@ int main(int argc, char** argv){
 	fputs("255\n", fp);
         for (int i=0; i < 64*3; i++){
                 for (int j=0; j < 64; j++){
-                        colors[j][i] = (i + j) & 255;
-    			fwrite(colors, sizeof(colors), 1, fp);
+                        colors[j][i] = (i + j) % 255;
+    			fprintf(fp, "%d", colors[j][i]);
 			fputs(" ", fp);
 		}
 		fputs("\n", fp);
