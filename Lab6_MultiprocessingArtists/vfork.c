@@ -21,14 +21,14 @@ void paint(int workID){
 	// Each artist paints one pixel at a time 
 	// with an RGB value
 	for (int i=0; i < 64; i++){
-		for (int j=0; j < 64*3; j++){
-			colors[workID][j] = (i + j) % 255;
+		for (int j=0; j<64*3; j++){
+			colors[i][j] = (i + j) & 255;
 		}
 	}
 }
 
 int main(int argc, char** argv){
-	
+
 	// Number of child processes
 	int numberOfArtists = 64;
 	// Store process id
@@ -50,6 +50,7 @@ int main(int argc, char** argv){
 	// Parent process
 	printf("Masterpiece(vfork.ppm) is being assembled\n");
 	
+
 	// PPM file
 	FILE *fp;
 	fp = fopen("vfork.ppm", "w+");
@@ -58,7 +59,6 @@ int main(int argc, char** argv){
 	fputs("255\n", fp);
         for (int i=0; i < 64; i++){
                 for (int j=0; j < 64*3; j++){
-                        colors[i][j] = (i + j) % 255;
     			fprintf(fp, "%d", colors[i][j]);
 			fputs(" ", fp);
 		}
