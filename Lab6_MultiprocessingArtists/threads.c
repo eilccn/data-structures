@@ -15,9 +15,11 @@ pthread_mutex_t mutex1 = PTHREAD_MUTEX_INITIALIZER;
 // Paint function
 void paint(int workID){
 	printf("Artist %d is painting\n", workID);
-
-	for (int i=0; i< 64*3; ++i){
-		colors[workID][i] = workID;
+	int i, j;
+	for (i=0; i< 64; ++i){
+		for (j=0; j<64*3; ++j){
+			colors[i][j] = (i+j) % 256;
+		}
 	}
 }
 
@@ -30,17 +32,20 @@ void *thread(void *vargp){
 }
 
 int main(){
+	int i, j;
+
 	// Store Pthread ID
 	pthread_t tids[NTHREADS];
 	printf("Counter starts at: %d\n", counter);
 	
 	// Create and execute multiple threads
-	for (int i=0; i < NTHREADS; ++i){
+	for (i=0; i < NTHREADS; ++i){
 		pthread_create(&tids[i], NULL, thread, NULL);
+		paint(i);
 	}
 
 	// Create and execute multiple threads
-	for (int i=0; i < NTHREADS; ++i){
+	for (i=0; i < NTHREADS; ++i){
 		pthread_join(tids[i], NULL);
 	}
 
@@ -52,8 +57,8 @@ int main(){
 	fputs("P3\n", fp);
 	fputs("64 64\n", fp);
 	fputs("255\n", fp);
-	for (int i=0; i<64; ++i){
-		for (int j=0; j< 64*3; ++j){
+	for (i=0; i<64; ++i){
+		for (j=0; j< 64*3; ++j){
 			fprintf(fp, "%d", colors[i][j]);
 			fputs(" ", fp);
 		}
