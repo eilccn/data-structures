@@ -122,9 +122,8 @@ void* paint(void* args){
         // at first glance this seems okay, but convince yourself
         // we can still have data races.
         // I suggest investigating a 'trylock'
-	pthread_mutex_t *lock = &canvas[painter->x][painter->y].lock;
 	
-	if (lock == 0){
+	if (pthread_mutex_trylock(&canvas[painter->x][painter->y].lock)==0){
 		canvas[painter->x][painter->y].r = painter->r;
                 canvas[painter->x][painter->y].g = painter->g;
                 canvas[painter->x][painter->y].b = painter->b;
@@ -196,7 +195,7 @@ int main(){
 	pthread_t Raphael_tid;
 	pthread_t Leonardo_tid;
     // Initialize a seed for our random number generator
-    srand(time(NULL));
+	srand(time(NULL));
 	
 	// Create our threads for each of our expert artists
 	pthread_create(&Michaelangelo_tid,NULL,(void*)paint,Michaelangelo);
@@ -241,10 +240,10 @@ int main(){
 	outputCanvas();
 	
 	// Terminate our program
-    free(Michaelangelo);
-    free(Donatello);
-    free(Raphael);
-    free(Leonardo);
+	free(Michaelangelo);
+	free(Donatello);
+	free(Raphael);
+	free(Leonardo);
 
     // TODO: Free any other memory you can think of
 	free(moreArtists);
