@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+
 // Global array
 // Canvas
 // 64 rows by 64 columns (each pixel stores 3 colors RGB)
@@ -20,8 +21,11 @@ void paint(int workID){
 	// Each artist has one row to paint on
 	// Each artist paints one pixel at a time 
 	// with an RGB value
-	for (int i=0; i < 64*3; i++){
-		colors[workID][i] = workID;
+	int i, j;
+	for (i=0; i < 64; i++){
+		for (j=0; j< 64*3; j++){
+			colors[i][j] = (i+j) & 255; 
+		}
 	}
 }
 
@@ -31,8 +35,9 @@ int main(int argc, char** argv){
 	int numberOfArtists = 64;
 	// Store process id
 	pid_t pid;
-
-	for (int i=0; i < numberOfArtists; i++){
+	
+	int i;	
+	for (i=0; i < numberOfArtists; i++){
 		pid = vfork();
 		
 		// Child process
@@ -54,8 +59,9 @@ int main(int argc, char** argv){
 	fputs("P3\n", fp);
 	fputs("64 64\n", fp);
 	fputs("255\n", fp);
-	for (int i=0; i<64; i++){
-		for (int j=0; j< 64*3; j++){
+	int j;
+	for (i=0; i<64; i++){
+		for (j=0; j<64*3; j++){
 			fprintf(fp, "%d", colors[i][j]);
 			fputs(" ", fp);
 		}
