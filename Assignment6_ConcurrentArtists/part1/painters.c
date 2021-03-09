@@ -40,14 +40,14 @@ typedef struct artist{
 // A roll of 7 moves my artist (-1,-1)
 const int moves = 8;
 const int movement[][2] ={
-    {-1, 0}, // to the left 
-    {-1, 1}, // to the left and down
-    {0, 1}, // down
-    {1, 1}, // to the right and down
-    {1, 0}, // to the right
-    {1, -1}, // to the right and up
-    {0, -1}, // up
-    {-1, -1} // to the left and up
+	{-1, 0}, // to the left 
+	{-1, 1}, // to the left and down
+	{0, 1}, // down
+	{1, 1}, // to the right and down
+	{1, 0}, // to the right
+	{1, -1}, // to the right and up
+	{0, -1}, // up
+	{-1, -1} // to the left and up
 };
 
 
@@ -98,56 +98,56 @@ void outputCanvas(){
 // You may modify this code however you like.
 void* paint(void* args){
     // Convert our argument structure to an artist
-    artist_t* painter = (artist_t*)args;
+	artist_t* painter = (artist_t*)args;
 
     // Our artist will now attempt to paint 5000 strokes of paint
 	// on our shared canvas
 	for(int i =0; i < 5000; ++i){
 
-        // Store our initial position
-        int currentX = painter->x;
-        int currentY = painter->y;
-        // Generate a random number from 0-7
-        int roll = (rand()%8);
-        painter->x += movement[roll][0];
-        painter->y += movement[roll][1];
-        // Clamp the range of our movements so we only
-        // paint within our 256x256 canvas.
-        if(painter->x < 0) { painter->x = 0; }
-        if(painter->x > CANVAS_WIDTH-1) { painter->x  = CANVAS_WIDTH-1; }
-        if(painter->y < 0) { painter->y = 0; }
-        if(painter->y > CANVAS_HEIGHT-1) { painter->y = CANVAS_HEIGHT-1; }
+        	// Store our initial position
+        	int currentX = painter->x;
+	        int currentY = painter->y;
+	        // Generate a random number from 0-7
+	        int roll = (rand()%8);
+	        painter->x += movement[roll][0];
+	        painter->y += movement[roll][1];
+	        // Clamp the range of our movements so we only
+	        // paint within our 256x256 canvas.
+	        if(painter->x < 0) { painter->x = 0; }
+	        if(painter->x > CANVAS_WIDTH-1) { painter->x  = CANVAS_WIDTH-1; }
+	        if(painter->y < 0) { painter->y = 0; }
+	        if(painter->y > CANVAS_HEIGHT-1) { painter->y = CANVAS_HEIGHT-1; }
    
-        // TODO: Implement some locking mechanism
-        // at first glance this seems okay, but convince yourself
-        // we can still have data races.
-        // I suggest investigating a 'trylock'
+	        // TODO: Implement some locking mechanism
+	        // at first glance this seems okay, but convince yourself
+	        // we can still have data races.
+	        // I suggest investigating a 'trylock'
 	
-	if (pthread_mutex_trylock(&canvas[painter->x][painter->y].lock)==0){
-		canvas[painter->x][painter->y].r = painter->r;
-                canvas[painter->x][painter->y].g = painter->g;
-                canvas[painter->x][painter->y].b = painter->b;
-		pthread_mutex_unlock(&canvas[painter->x][painter->y].lock);	
-	}else{
-		painter->x = currentX;
-		painter->y = currentY;
-        }
+		if (pthread_mutex_trylock(&canvas[painter->x][painter->y].lock)==0){
+			canvas[painter->x][painter->y].r = painter->r;
+                	canvas[painter->x][painter->y].g = painter->g;
+                	canvas[painter->x][painter->y].b = painter->b;
+			pthread_mutex_unlock(&canvas[painter->x][painter->y].lock);	
+		}else{
+			painter->x = currentX;
+			painter->y = currentY;
+        	}
  
-        // Try to paint
-        // paint the pixel if it is white.
-        if( canvas[painter->x][painter->y].r == 255 &&
-            canvas[painter->x][painter->y].g == 255 &&
-            canvas[painter->x][painter->y].b == 255){
-                canvas[painter->x][painter->y].r = painter->r;
-                canvas[painter->x][painter->y].g = painter->g;
-                canvas[painter->x][painter->y].b = painter->b;
-        }else{
-        // If we cannot paint the pixel, then we backtrack
-        // to a previous pixel that we own.
-            painter->x = currentX;
-            painter->y = currentY;
-        }
-    }
+	        // Try to paint
+        	// paint the pixel if it is white.
+		if( canvas[painter->x][painter->y].r == 255 &&
+            	canvas[painter->x][painter->y].g == 255 &&
+            	canvas[painter->x][painter->y].b == 255){
+                	canvas[painter->x][painter->y].r = painter->r;
+                	canvas[painter->x][painter->y].g = painter->g;
+                	canvas[painter->x][painter->y].b = painter->b;
+        	}else{
+        		// If we cannot paint the pixel, then we backtrack
+        		// to a previous pixel that we own.
+            		painter->x = currentX;
+            		painter->y = currentY;
+        	}
+	}
 }
 
 // ================== Program Entry Point ============
@@ -220,7 +220,7 @@ int main(){
 		moreArtists[i].b = rand()%256;
 
 		pthread_create(&moreArtists_tid[i],NULL,(void*)paint,
-		moreArtists);
+		&moreArtists[i]);
 	}				
 
 	// Join each with the main thread.  
