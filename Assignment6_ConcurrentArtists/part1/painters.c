@@ -122,6 +122,17 @@ void* paint(void* args){
         // at first glance this seems okay, but convince yourself
         // we can still have data races.
         // I suggest investigating a 'trylock'
+	pthread_mutex_t *lock = &canvas[painter->x][painter->y].lock;
+	
+	if (lock == 0){
+		canvas[painter->x][painter->y].r = painter->r;
+                canvas[painter->x][painter->y].g = painter->g;
+                canvas[painter->x][painter->y].b = painter->b;
+		pthread_mutex_unlock(&canvas[painter->x][painter->y].lock);	
+	}else{
+		painter->x = currentX;
+		painter->y = currentY;
+        }
  
         // Try to paint
         // paint the pixel if it is white.
@@ -198,6 +209,20 @@ int main(){
     // pthread_t moreArtists_tid[rookieArtists];
 	// artist_t* moreArtists = malloc(..);
     // for(int i =0; i < rookieArtists; ++i){
+	int rookieArtists = 50;
+	artist_t* moreArtists = malloc(sizeof(artist_t[rookieArtists]));
+	pthread_t moreArtists_tid[rookieArtists]; 
+
+	for (int i=0; i < rookieArtists; ++i){
+		moreArtists[i].x = rand()%256;
+		moreArtists[i].y = rand()%256;
+		moreArtists[i].r = rand()%256;
+		moreArtists[i].g = rand()%256;
+		moreArtists[i].b = rand()%256;
+
+		pthread_create(&moreArtists_tid[i],NULL,(void*)paint,
+		moreArtists);
+	}				
 
 	// Join each with the main thread.  
 	// Do you think our ordering of launching each thread matters?
@@ -205,9 +230,12 @@ int main(){
 	pthread_join(Donatello_tid, NULL);		   
 	pthread_join(Raphael_tid, NULL);		   
 	pthread_join(Leonardo_tid, NULL);		   
-
+	
     // TODO: Add the join the 50 other artists threads here	
     // for (...)
+	for (int i=0; i < rookieArtists; ++i){
+		pthread_join(moreArtists_tid[i], NULL);
+	}
 
     // Save our canvas at the end of the painting session
 	outputCanvas();
@@ -219,6 +247,6 @@ int main(){
     free(Leonardo);
 
     // TODO: Free any other memory you can think of
-
+	free(moreArtists);
 	return 0;
 }
