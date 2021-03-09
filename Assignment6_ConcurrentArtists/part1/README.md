@@ -161,7 +161,9 @@ This means you need to enforce some locking mechanism.
 
 **Discuss(in a few sentences)** how starvation may occur in the above program, and how you would possibly fix it? (You may fix it in your implementation if you like--the art may become more beautiful!)
 
-*edit and add your response here*
+Starvation might occur if certain threads or artists get "greedy" and prevent other artists from painting on pixels for long periods of time. With 50+ artists painting at the same time, it's possible that by chance, certain artists could keep running into locked pixels and will be blocked from painting for a length of time. 
+
+This issue might be fixed by creating pre-determined paths for each artist as opposed to randomized paths. By planning out which pixels each artist should paint, we can avoid the possibilities of artists continually running into locked pixels or pixels that other artists have already painted in.    
 
 ## Rubric
 
