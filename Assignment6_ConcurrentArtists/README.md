@@ -5,7 +5,7 @@
 - Did you collaborate with any other students/TAs/Professors? No
 - Did you use any external resources? (Cite them below)
   - https://computing.llnl.gov/tutorials/pthreads/#PassingArguments
-  - tbd
+  - https://www.geeksforgeeks.org/pthread_self-c-example/
 - (Optional) What was your favorite part of the assignment?
 - (Optional) How would you improve the assignment?
 
