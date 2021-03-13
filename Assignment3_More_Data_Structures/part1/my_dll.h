@@ -55,6 +55,10 @@ dll_t* create_dll(){
 	myDLL->head = NULL;
 	myDLL->tail = NULL;
 	
+	if (myDLL->head == NULL){
+		return NULL;
+	}
+
 	return myDLL;
 }
 
@@ -64,13 +68,15 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
-	if ((head = NULL)){
+	if (l->head == NULL){
 		return 1;
+	} else {
+		return 0;
 	}
-	else if ((l = NULL)){
+
+	if (l == NULL){
 		return -1;
 	}
-	return 0;
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -80,15 +86,20 @@ int dll_empty(dll_t* l){
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
 	node_t* newNode = new_node(item);
-	if (l = NULL){
+
+	if (l == NULL){
 		return -1;
 	}
-	else if (newNode = NULL){
+	if (newNode == NULL){
 		return 0;
 	}
 
-	(l->head)->previous = newNode;
 	newNode->next = l->head;
+	newNode->previous = NULL;
+
+	if (l->head != NULL){
+		(l->head)->previous = newNode;
+	}
 	l->head = newNode;		
 	return 1;
 }
@@ -98,20 +109,29 @@ int dll_push_front(dll_t* l, int item){
 // Returns 0 on failure ( i.e. we couldn't allocate memory for the new node)
 // Returns -1 if DLL is NULL.
 // (i.e. the memory allocation for a new node failed).
-int dll_push_back(dll_t* l, int item){
+int dll_push_back(dll_t* l, int item){	
 	node_t* newNode = new_node(item);
-	if (l = NULL){		
+
+	if (l == NULL){		
 		return -1;
 	}
-	else if (newNode = NULL){
+	if (newNode == NULL){
 		return 0;
 	}
 	
-	while ((l->head)->next != NULL){
-		(l->head) = (l->head)->next;
+	newNode->next = NULL;
+	
+	if (l->head != NULL){
+		newNode->previous = NULL;
+		l->head = newNode;
 	}
-	(l->head)->next = newNode;
-	newNode->previous = l->head;
+	
+	node_t* last = l->head;
+	while (last->next != NULL){
+		last = last->next;
+	}
+	last->next = newNode;
+	newNode->previous = last;	
 	return 1; 
 }
 
@@ -120,39 +140,46 @@ int dll_push_back(dll_t* l, int item){
 // Returns a -1 if the DLL is NULL. 
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_front(dll_t* t){
-	if (t= NULL){
+	node_t* cur = t->head;
+	return cur->data;
+	
+	if (t->head == NULL){
 		return -1;
 	}
-	else if (t->count = 0){
+	if (dll_empty(t) == 1){
 		return 0;
 	}
-	else if (t->head != NULL){
-		return ((t->head)->data);
-		(t->head) = (t->head)->next;
-		free(t->head);
-		if (t->head != NULL);
-			(t->head)->previous = NULL;
-	}
+	
+	
+	if (cur->next == NULL){
+		t->head = NULL;
+			
+	} else {
+		t->head = cur->next;
+		(t->head)->previous = NULL;
+	}	
+	
+	free(cur);
 }
+
 
 // Returns the last item in the DLL, and also removes it from the list.
 // Returns 0 on failure, i.e. there is noting to pop from the list.
 // Returns a -1 if the DLL is NULL. 
 // Assume no negative numbers in the list or the number zero.
 int dll_pop_back(dll_t* t){
-	if (t= NULL){
+	node_t* cur = t->tail;
+	return cur->data;
+
+	if (t->head == NULL){
                 return -1;
         }
-        else if (t->count = 0){
+        if (dll_empty(t) == 1){
                 return 0;
         }
-        else if (t->tail != NULL){
-		return ((t->tail)->data);
-		(t->tail) = (t->tail)->previous;
-		free(t->tail);
-		if (t->tail != NULL);
-			(t->tail)->next = NULL;
-	}			
+
+	cur->previous->next = NULL;
+	free(cur);			
 }
 
 // Inserts a new node before the node at the specified position.
@@ -165,14 +192,14 @@ int dll_pop_back(dll_t* t){
 // Returns -1 if the list is NULL
 int dll_insert(dll_t* l, int pos, int item){
 	node_t* newNode = new_node(item);
-	
-	if (l = NULL){
+
+	if (l->head == NULL){
 		return -1;
 	}
-	else if (pos < 0 || pos > (l->count)){
+	if (pos < 0 || pos > (l->count)){
 		return 0;
 	}
-	else if (newNode = NULL){
+	if (newNode == NULL){
 		return 0;
 	}
 	else {
@@ -180,10 +207,10 @@ int dll_insert(dll_t* l, int pos, int item){
 		while (currentnode != NULL && currentnode->data != pos){
 			currentnode = currentnode->next;
 		}
-		if (currentnode = NULL){
+		if (currentnode == NULL){
 			return 0;
 		}
-		else if (currentnode->next = NULL){
+		if (currentnode->next == NULL){
                 currentnode->next = newNode;
                 newNode->previous = currentnode;
                 (l->tail) = newNode;
@@ -207,19 +234,20 @@ int dll_insert(dll_t* l, int pos, int item){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_get(dll_t* l, int pos){
-	if (l = NULL){
+	if (l->head == NULL){
 		return -1;
 	}
-	else if ((l->head) != NULL){
+	
+	if (pos < 0 || pos > (l->count)){
 		return 0;
 	}
-	else {
-		if ((l->count) = pos){
-			return ((l->head)->data);
-		(l->count)++;
-		l->head = (l->head)->next;
-		}
-	}				
+
+	node_t* cur = l->head;
+	while (cur != NULL && cur->data != pos){
+		cur = cur->next;
+	} 
+	return cur->data;
+					
 }
 
 // Removes the item at position pos starting at 0 ( 0 being the first item )
@@ -229,44 +257,54 @@ int dll_get(dll_t* l, int pos){
 // Returns -1 if the list is NULL
 // Assume no negative numbers in the list or the number zero.
 int dll_remove(dll_t* l, int pos){
-	if ((l = NULL)){
-                return -1;
-        }
-        else if (pos < 0 || pos > (l->count)){
+        if (pos < 0 || pos > (l->count)){
                 return 0;
         }
-        else {
-                node_t* currentnode = l->head;
-                while (currentnode != NULL && currentnode->data != pos){
-                        currentnode = currentnode->next;
-                }
-                if ((currentnode = NULL)){
-                        return 0;
-                }
-                else if ((currentnode->previous = NULL)){
-			dll_pop_front(l);
+
+        node_t* cur = l->head;
+        while (cur != NULL && cur->data != pos){
+		cur = cur->next;
+	}
+        
+	// Null cur
+	if (cur == NULL){
+		return -1;
+	}
+
+	// Handle first item
+	if (cur->previous == NULL){
+		if (cur->next == NULL){
+		// If only item
+			l->head = NULL;
+			free(cur);
+		} else {
+		// If more items
+			l->head = cur->next;
+			(l->head)->previous = NULL;
+			free(cur);
 		}
-		else if (currentnode->next = NULL){
-			dll_pop_back(l);
-		}
-		else {
-			node_t* nextnode = currentnode->next;
-			node_t* prevnode = currentnode->previous;
-			nextnode->previous = prevnode;
-			prevnode->next = nextnode;
-			currentnode->next = NULL;
-			currentnode->previous = NULL;
-			free(currentnode);
-			currentnode = NULL;
-		}
+	}
+
+	// Handle last item
+	if (cur->next == NULL){
+		cur->previous->next = NULL;
+		free(cur);
+	}
+
+	// Handles middle item
+	if (cur->previous != NULL && cur->next != NULL){
+		cur->previous->next = cur->next;
+		cur->next->previous = cur->previous;
+		free(cur);
 	}	
+return 1;	
 }
 
 // DLL Size
 // Queries the current size of a DLL
 // Returns -1 if the DLL is NULL.
 int dll_size(dll_t* t){
-	if ((t->head) = NULL){
+	if ((t->head) == NULL){
 		return -1;
 	}
 	(t->head) = (t->head)->next;
