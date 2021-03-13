@@ -55,7 +55,7 @@ dll_t* create_dll(){
 	myDLL->head = NULL;
 	myDLL->tail = NULL;
 	
-	if (myDLL->head == NULL){
+	if (myDLL == NULL){
 		return NULL;
 	}
 
@@ -86,7 +86,7 @@ int dll_empty(dll_t* l){
 // (i.e. the memory allocation for a new node failed).
 int dll_push_front(dll_t* l, int item){
 	node_t* newNode = new_node(item);
-
+ 
 	if (l == NULL){
 		return -1;
 	}
@@ -97,8 +97,10 @@ int dll_push_front(dll_t* l, int item){
 	newNode->next = l->head;
 	newNode->previous = NULL;
 
-	if (l->head != NULL){
-		(l->head)->previous = newNode;
+	if (dll_empty(l) == 1){
+		l->tail = newNode;
+	} else{
+		l->head->previous = newNode;
 	}
 	l->head = newNode;		
 	return 1;
@@ -121,17 +123,17 @@ int dll_push_back(dll_t* l, int item){
 	
 	newNode->next = NULL;
 	
-	if (l->head != NULL){
+	if (dll_empty(l) == 1){
 		newNode->previous = NULL;
 		l->head = newNode;
+		l->tail = newNode;
+	} else {
+		newNode->previous = l->tail;
+		l->tail->next = newNode;
+		l->tail = newNode;
 	}
 	
-	node_t* last = l->head;
-	while (last->next != NULL){
-		last = last->next;
-	}
-	last->next = newNode;
-	newNode->previous = last;	
+		
 	return 1; 
 }
 
@@ -315,7 +317,13 @@ int dll_size(dll_t* t){
 // Removes a DLL and all of its elements from memory.
 // This should be called before the proram terminates.
 void free_dll(dll_t* t){
-	free(t);
+	node_t* cur = t->head;
+	
+	while(cur != NULL){
+		node_t* next = cur->next;
+		free(cur);
+		cur = next;
+	}
 }
 
 
