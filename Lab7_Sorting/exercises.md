@@ -9,7 +9,7 @@
 
 ## Answers:
 
-1. *edit your answer here for question 1*
-2. *edit your answer here for question 2*
-3. *edit your answer here for question 3*
-4. *edit your answer here for question 4*
+1. The worst case Big-O complexity of this algorithm is O(n*n) because this is a selection sort, in which the smallest element in an array is repeatedly found in ascending order from an unsorted part of the array and placed in the beginning of an array. This algorithm maintains two subarrays in a given array.
+2. Without knowing if the array is already sorted or not, the best case time complexity is O(n*n).
+3. I did not have to allocate any extra memory in order to perform the sort.
+4. It would not change for a linked-list. It would still be O(n*n).
