@@ -13,14 +13,18 @@
 int findMinimum(int* array, int start, int stop){
     // TODO: Iterate through a subset of the array and find the minimum value.
     //       Return the index of that minimum value.
-	int min = array[start-1];
+	int i, j, min_index;
 
-	for (start=0; start<stop; start++){
-		if (array[start]<min){
-			min = array[start];
+	for (i=start; i<stop-1; i++){
+		min_index = i;
+		for (j = start+1; j<stop; j++){
+			if (array[j] < array[min_index]){
+				min_index = j;
+			}
 		}
 	}
-    return min; // TODO: Modify this to return the
+		
+    return min_index; // TODO: Modify this to return the
 }
 
 // Swaps two numbers in an array
@@ -42,16 +46,12 @@ void swap(int* a, int* b){
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void sortIntegers(int* array, unsigned int size){
     // TODO: Implement selection sort
-	int i, j, min_index;
+	int i, min_index;
 	
 	for (i=0; i < size-1; i++){
-		min_index = i;
-		for (j = i+1; j < size; j++)
-			if (array[j] < array[i])
-				min_index = j;
-		
+		min_index = findMinimum(array, i, size);
 		swap(&array[min_index], &array[i]);
-	}
+	} 
 }
 
 
