@@ -10,7 +10,7 @@ Discuss and answer the following questions (Please make sure to elaborate and ju
 
 ## Answers:
 
-1. *edit your answer here for question 1*
-2. *edit your answer here for question 2*
-3. *edit your answer here for question 3*
-4. *edit your answer here for question 4*
+1. The Big-O worst case complexity for insertion sort is O(n*n). This is because the worst case will occur when the input is in decreasing order. In the sort function, the while loop executes as long as i > j and array[i] < array[j]. As a result, the total number of while loop iterations is the same as the number of numbers being swapped. The overall time complexity of the algorithm is O(n + f(n)) where f(n) is the number of swaps, and the worst case is O(n*n).
+2. The best case complexity is O(n). This would occur when the input list is already sorted or mostly sorted.
+3. Insertion sort only requires a constant amount O(1) of additional memory space because it utilizes in-place sorting. As a result, no additional arrays are needed in order to temporarily store data. 
+4. Stable sorting algorithms sort repeated elements in the same order that they appear in the input. Insertion sort is a stable algorithm because we only swap elements if the element is larger than the key -- in other words, we do not swap elements when they are equal to each other so their positions in the array do not change. 
