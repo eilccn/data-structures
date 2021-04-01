@@ -98,7 +98,7 @@ void swapStrings(char** s1, char** s2){
 
 <!--**Answer the following with your partner:**--> **Answer the following here**: How do you think the strcmp function is implemented? i.e. What would your algorithm be in a sentence or two?
 
-*edit your answer here*
+If s1 and s2 are identical then their acsii number values will be equal to each other and the strcmp function will return 0. No swapping needs to occur. Else if the strcmp function returns a number less than 0, then the ascii number value of s1 is less than s2. Nothing needs to be done because this means that the strings are already sorted in the right order. If strcmp of s1 and s2 returns a value greater than 0, then the ascii number value of s1 is greater than s2, so a swap needs to occur.
 
 # Part 3 - Quick sort
 
