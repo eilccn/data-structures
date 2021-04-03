@@ -8,20 +8,19 @@
 
 1. Explain: What do you think the Big-O (worst-case) complexity of the merge sort algorithm is and why? 
 
-*edit your answer here for Task 2 question 1*
+The worst-case complexity is O(nlogn). The worst case will occur when merge sort will have to do a maximum amount of comparisons where every element of each subarray will be compared at least once. Since merge sort uses the divide and conquer method, the total number of stages in which the array is halved gives the algorithm a time complexity of log(n). The number of comparisons made at each stage gives the time complexity of O(nlogn).
 
 2. Explain: What do you think the best-case complexity of the merge sort algorithm is and why?
 
-*edit your answer here for Part 2 question 2*
+The best case complexity is still O(nlogn). In the best case scenario, the array is already sorted; however, in both worst and best case, merge sort always divides the array into two halves and takes linear time to merge the two haves to give nlogn.
 
 3. Does merge sort require any additional storage beyond the original array? If so how much and why?
 
-*edit your answer here for Part 2 question 3*
+Merge sort does not sort in place so it requires additional storage. The space required is linear to the size of the array. This means that it needs n for the first stage, n/2 for the second stage, etc. The space complexity, therefore, is O(n).
 
 4. How much time in Big-O does it take to merge all of the subarrays together? Explain or draw why?
 
-*edit your answer here for Part 2 question 4*
-
+Merging the subarrays, made by dividing the original array of n elements requires a time complexity of O(n). This is because we are only taking into account the time complexity of merging all the subarrays at the final stage and not the entire mergesort process. Simply merging n elements together requires O(n) complexity. At each stage, the number of subarrays doubles, but the merging time halves, resulting in the doubling and halving canceling each other out. In other words, we can have 2 subarrays or 8 subarrays, but the complexity will always be O(n) because 2 * n/2 = n and 8 * n/8 = n. 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
 
