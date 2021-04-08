@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 // TODO: Implement iterative solution here
-int factorial(int n){
-	int res = 1, i;
+int factorial(long long int n){
+	long long int res = 1, i;
 	for (i = 2; i <= n; i++){
 		res *= i;
 	}
@@ -13,7 +13,7 @@ int factorial(int n){
 }
 
 // TODO: Implement recursive solution here
-int factorial_rec(int n){
+int factorial_rec(long long int n){
         if (n == 0){
                 return 1;
         }
@@ -24,8 +24,8 @@ int factorial_rec(int n){
 int main(){
 
   // Both of these should print the same result!
-  printf("factorial(10) = %d\n",factorial(10));
-  printf("factorial_rec(10) = %d\n",factorial_rec(10));
+  printf("factorial(10) = %lld\n",factorial(10));
+  printf("factorial_rec(10) = %lld\n",factorial_rec(10));
 
 
   return 0;
