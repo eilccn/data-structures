@@ -24,7 +24,7 @@ void dfs(TreeNode_t* start){
 		return;
 	}
 
-	printf("%d", start->data);
+	printf("%c\n", start->data);
 	
 	dfs(start->left);
 	
