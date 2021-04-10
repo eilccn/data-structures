@@ -11,9 +11,20 @@
 // The BST fields should also be initialized to default values(i.e. size=0).
 bst_t* bst_create(){
     // Modify the body of this function as needed.
-    bst_t* myBST= NULL; 
+	bst_t* myBST= (bst_t*)malloc(sizeof(bst_t)); 
+	myBST->size = 0;
+	myBST->root = NULL;
+	return myBST;
+}
 
-    return myBST;
+// Added Helper Function
+// Creates a node 
+bstnode_t* new_node(int item){
+	bstnode_t* temp = (bstnode_t*)malloc(sizeof(bstnode_t));
+	temp->data = item;
+	temp->leftChild = NULL;
+	temp->rightChild = NULL;
+	return temp;
 }
 
 // BST Empty
@@ -21,7 +32,10 @@ bst_t* bst_create(){
 // Returns 1 if true (The BST is completely empty)
 // Returns 0 if false (the BST has at least one element)
 int bst_empty(bst_t* t){
-    return 0;
+	if (t==NULL){
+		return 1;
+	}
+	return 0;
 }
 
 // Adds a new node containng item to the BST
@@ -34,8 +48,23 @@ int bst_empty(bst_t* t){
 //      (i.e. the memory allocation for a new node failed).
 // Your implementation should should run in O(log(n)) time.
 //  - A recursive imlementation is suggested.
-int bst_add(bst_t* t, int item){
-    return -1;
+int bst_add(bst_t* t, int item){  
+
+	if (new_node(item)==NULL){
+		return -1;
+	}
+
+	if (t==NULL){
+		t->root->data = item;
+		bst_add(t, item);
+	}
+
+	if (item < t->root->data){
+		t->root->leftChild->data = bst_add(t, item);
+	} else if (item > t->root->data){
+		t->root->rightChild->data = bst_add(t, item);
+	}
+	return 1;
 }
 
 // Prints the tree in ascending order if order = 0, otherwise prints in descending order.
