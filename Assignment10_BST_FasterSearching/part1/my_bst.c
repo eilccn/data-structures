@@ -38,6 +38,19 @@ int bst_empty(bst_t* t){
 	return 0;
 }
 
+// Helper add function
+bstnode_t* bst_addhelper(bstnode_t *root, int item){
+	if (root==NULL)
+		return new_node(item);
+        if (item < root->data)
+                root->leftChild = bst_addhelper(root->leftChild, item);
+        else if (item > root->data)
+                root->rightChild = bst_addhelper(root->rightChild, item);
+ 
+        return root;
+}
+	
+
 // Adds a new node containng item to the BST
 // The item is added in the correct position in the BST.
 //  - If the data is less than or equal to the current node we traverse left
@@ -48,22 +61,13 @@ int bst_empty(bst_t* t){
 //      (i.e. the memory allocation for a new node failed).
 // Your implementation should should run in O(log(n)) time.
 //  - A recursive imlementation is suggested.
-int bst_add(bst_t* t, int item){  
-
-	if (new_node(item)==NULL){
+int bst_add(bst_t* t, int item){ 
+	if (t->root == NULL){
 		return -1;
 	}
 
-	if (t==NULL){
-		t->root->data = item;
-		bst_add(t, item);
-	}
-
-	if (item < t->root->data){
-		t->root->leftChild->data = bst_add(t, item);
-	} else if (item > t->root->data){
-		t->root->rightChild->data = bst_add(t, item);
-	}
+	bst_addhelper(t->root, item);
+	 
 	return 1;
 }
 
@@ -95,31 +99,88 @@ void bst_print(bst_t *t, int order){
 	} 
 }
 
+// Sum helper
+int sum_helper(bstnode_t* root){
+	int sum, sumLeft, sumRight;
+
+	sum = sumRight = sumLeft = 0;
+
+	if (root==NULL){
+		exit(1);
+	}
+
+	else {
+		if (root->leftChild != NULL){
+			sumLeft = sum_helper(root->leftChild);
+		}
+		if (root->rightChild != NULL){
+			sumRight = sum_helper(root->rightChild);
+		}
+
+	sum = root->data + sumLeft + sumRight;
+	return sum;
+	}
+}
+
 // Returns the sum of all the nodes in the bst. 
 // exits the program for a NULL tree. 
 // It should run in O(n) time.
 int bst_sum(bst_t *t){
-  return 0;
+	return sum_helper(t->root);	
+}
+
+// Helper find value greater than root function
+bstnode_t*  helper_findgreater(bstnode_t *root, int value){
+	return helper_findgreater(root->rightChild, value);
+}
+
+// Helper find value less than root function
+bstnode_t*  helper_findlesser(bstnode_t *root, int value){
+        return helper_findlesser(root->leftChild, value);
 }
 
 // Returns 1 if value is found in the tree, 0 otherwise. 
 // For NULL tree it exists the program. 
 // It should run in O(log(n)) time.
 int bst_find(bst_t * t, int value){
-  return 0;
+	if (t==NULL){
+		exit(1);
+	} 
+	if (value > t->root->data){
+		helper_findgreater(t->root, value);
+	}
+	else if (value < t->root->data){
+		helper_findlesser(t->root, value);
+	}
+	return 1;		
 }
 
 // Returns the size of the BST
 // A BST that is NULL exits the program.
 // (i.e. A NULL BST cannot return the size)
 unsigned int bst_size(bst_t* t){
-    return 0;
+	if (t == NULL){
+		exit(1);
+	}
+	return t->size;
+}
+
+// Free helper
+void free_helper(bstnode_t* root){
+	if (root==NULL){
+		return;
+	}
+	free_helper(root->leftChild);
+	free_helper(root->rightChild);
+
+	free(root);
 }
 
 // Free BST
 // Removes a BST and ALL of its elements from memory.
 // This should be called before the proram terminates.
 void bst_free(bst_t* t){
-
+	free_helper(t->root);
 }
+
 
