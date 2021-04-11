@@ -67,15 +67,32 @@ int bst_add(bst_t* t, int item){
 	return 1;
 }
 
+// Helper function for traversing in ascending order
+void traverse(bstnode_t *root){
+	traverse(root->leftChild);
+        printf(" %d", root->data);
+	traverse(root->rightChild);
+}
+
+// Helper function for traversing in descending order
+void d_traverse(bstnode_t *root){
+	d_traverse(root->rightChild);
+        printf(" %d", root->data);
+	d_traverse(root->leftChild);
+}
+
 // Prints the tree in ascending order if order = 0, otherwise prints in descending order.
 // For NULL tree -- print "(NULL)".
 // It should run in O(n) time.
 void bst_print(bst_t *t, int order){
-    if(NULL == t){
-        printf("(NULL)");
-    }else{
-
-    }
+	if(NULL == t){
+		printf("(NULL)");
+	}
+	if (order==0){
+		traverse(t->root);
+	} else {
+		d_traverse(t->root);
+	} 
 }
 
 // Returns the sum of all the nodes in the bst. 
