@@ -62,13 +62,12 @@ bstnode_t* bst_addhelper(bstnode_t *root, int item){
 // Your implementation should should run in O(log(n)) time.
 //  - A recursive imlementation is suggested.
 int bst_add(bst_t* t, int item){ 
-	if (t->root == NULL){
+	bstnode_t* added_node = bst_addhelper(t->root, item);
+	if (added_node == NULL){
 		return -1;
-	}
-
-	bst_addhelper(t->root, item);
-	 
-	return 1;
+	} else {
+		return 1;
+	}	
 }
 
 // Helper function for traversing in ascending order
@@ -147,12 +146,18 @@ int bst_find(bst_t * t, int value){
 		exit(1);
 	} 
 	if (value > t->root->data){
-		helper_findgreater(t->root, value);
+		bstnode_t *greaterfind = helper_findgreater(t->root, value);
+		if (greaterfind->data == value){
+			return 1;
+		}
 	}
 	else if (value < t->root->data){
-		helper_findlesser(t->root, value);
+		bstnode_t *lesserfind = helper_findlesser(t->root, value);
+		if (lesserfind->data == value){
+			return 1;
+		}
 	}
-	return 1;		
+	return 0;		
 }
 
 // Returns the size of the BST
