@@ -128,36 +128,28 @@ int bst_sum(bst_t *t){
 	return sum_helper(t->root);	
 }
 
-// Helper find value greater than root function
-bstnode_t*  helper_findgreater(bstnode_t *root, int value){
-	return helper_findgreater(root->rightChild, value);
-}
-
-// Helper find value less than root function
-bstnode_t*  helper_findlesser(bstnode_t *root, int value){
-        return helper_findlesser(root->leftChild, value);
+// Helper find value
+int  helper_find(bstnode_t *root, int value){ 
+	if (!root){
+		exit(1);
+	}
+	if (root->data == value){
+		return 1;
+	}
+	else if (value > root->data){
+		return  helper_find(root->rightChild, value);
+	} 
+	else {
+		return helper_find(root->leftChild, value);	 
+	}
+	return 0;
 }
 
 // Returns 1 if value is found in the tree, 0 otherwise. 
 // For NULL tree it exists the program. 
 // It should run in O(log(n)) time.
 int bst_find(bst_t * t, int value){
-	if (t==NULL){
-		exit(1);
-	} 
-	if (value > t->root->data){
-		bstnode_t *greaterfind = helper_findgreater(t->root, value);
-		if (greaterfind->data == value){
-			return 1;
-		}
-	}
-	else if (value < t->root->data){
-		bstnode_t *lesserfind = helper_findlesser(t->root, value);
-		if (lesserfind->data == value){
-			return 1;
-		}
-	}
-	return 0;		
+	return helper_find(t->root, value);		
 }
 
 // Returns the size of the BST
