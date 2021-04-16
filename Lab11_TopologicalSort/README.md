@@ -150,8 +150,8 @@ Okay, now that you understand the data structure, you will implement two functio
 
 Your answers here:
 
-1. *edit your response*
-2. *edit your response*
+1. An adjacency matrix keeps a value of 1 or 0 for every pair of nodes so it requires O(N*N) space.
+2. In order for an adjacency matrix to show how every node in a graph is connected to each other, whether they are connected or not in the form of 1's and 0's, a square matrix is necessary. For each row, there needs to be an equal number of columns to properly model these relationships.
 
 
 ## Compiling and running the program.
@@ -203,9 +203,9 @@ eat exercise
 
 Your answer:
 
-1. *edit your response*
-2. *edit your response*
-3. *edit your response*
+1. In an undirected graph, edges have no start and end point and nodes either are mutually adjacent or mutually unadjacent. Since an edge {u, v} = {v, u} it would be ambiguous which node would come first. A topological sort therefore is not possible for an undirected graph.
+2. Topological sort can only be used on directed acyclic graphs. If there is a cycle, it would be unclear where the sort itself should start and there will be a loop. 
+3. Upon running tsort, the output will say that there is a loop detected. Algorithmically, a depth first search can be used to detect a cycle. A DFS for a connected graph produces a tree. 
 
 
 # Deliverable
