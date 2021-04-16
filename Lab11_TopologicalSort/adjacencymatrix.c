@@ -124,10 +124,9 @@ int nodeOutDegree(int *g, int node){
 // Figure out if two nodes are connected
 // Returns a 1 if node1 is connected to node 2
 int isConnected(int* g, int node1, int node2){
-	return 9999;
-	
-
-	
+	if (g[node1*COLUMNS + node2] == 1)
+		return 1;	
+	return 0;
 }
 
 int main(){
