@@ -1,2 +1,10 @@
 eat sleep
 eat exercise
+coffee breakfast
+breakfast lunch
+lunch dinner
+dinner break
+break night
+night sleep
+night dream
+wakeup coffee
