@@ -92,25 +92,42 @@ void printGraph(int* g){
 // Compute 'in-degree' of a node
 // For a given node 'n' in an adjacency matrix,
 // compute the in-degree.
-int nodeInDegree(int* g, int node){
-    // TODO
-    return 999999;
+int nodeInDegree(int *g, int node){
+	int i;
+	int count=0;
+
+	for(i=0; i<COLUMNS; i++){
+		if (g[node*COLUMNS + i] == 1){
+			++count;
+		}
+	}
+
+	return count;
 }
 
 // Compute 'out-degree' of a node
 // For a given node 'n' in an adjacency matrix,
 // compute the out-degree.
-int nodeOutDegree(int* g, int node){
-    // TODO
-    return 999999;
+int nodeOutDegree(int *g, int node){
+	int i;
+        int count=0;
+
+        for(i=0; i<ROWS; i++){       
+                if (g[i*ROWS + node] == 1){
+                        ++count;
+                }
+	}   
+	return count;
 }
 
 
 // Figure out if two nodes are connected
 // Returns a 1 if node1 is connected to node 2
 int isConnected(int* g, int node1, int node2){
-    // TODO
-    return 0;
+	return 9999;
+	
+
+	
 }
 
 int main(){
@@ -126,7 +143,7 @@ int main(){
     for(i =0; i < COLUMNS; ++i){
         printf("node %d in-degree= %d\n",i,nodeInDegree(&g_testgraph,i));
     }
-    // Print out the nodeInDegree of each of the
+    // Print out the nodeOutDegree of each of the
     // five nodes
     i=0;
     for(i =0; i < COLUMNS; ++i){
