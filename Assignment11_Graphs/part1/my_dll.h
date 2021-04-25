@@ -31,6 +31,17 @@ typedef struct DLL{
     node_t * tail;          //tail points to the last node in our DLL.
 }dll_t;
 
+// Create new node
+// Return pointer to next node and previous node
+node_t* new_node(void* item){
+	node_t* newNode = (node_t*)malloc(sizeof(node_t));
+	newNode->data = item;
+	newNode->previous = NULL;
+	newNode->next = NULL;
+	
+	return newNode;
+}
+
 // Creates a DLL
 // Returns a pointer to a newly created DLL.
 // The DLL should be initialized with data on the heap.
@@ -52,15 +63,14 @@ dll_t* create_dll(){
 // Returns 0 if false (the DLL has at least one element enqueued)
 // Returns -1 if the dll is NULL.
 int dll_empty(dll_t* l){
+	if (l == NULL){
+		return -1;
+	}	
+
 	if (l->head == NULL){
 		return 1;
 	} 
-	else if (l->head != NULL){
-		return 0;
-	}
-	else if (l == NULL){
-		return -1;
-	}	
+	return 0;	
 }
 
 // push a new item to the front of the DLL ( before the first node in the list).
@@ -129,11 +139,11 @@ void* dll_pop_front(dll_t* t){
 	node_t* cur = t->head;
 	return cur->data;
 
-	if (dll_empty(t) == -1){
-		return -1;
-	}
-	else if (dll_empty(t) == 1){
+	if (dll_empty(t) == 1){
 		return 0;
+	}
+	else if (dll_empty(t) == -1){
+		return -1;
 	}
 	
 	if (cur->next == NULL){
@@ -181,26 +191,28 @@ int dll_insert(dll_t* l, int pos, void* item){
 	}
 	if (pos < 0 || pos > (l->count) || newNode == NULL){
 		return 0;        
-	}
+	} else {
 	
-	node_t* currentnode = l->head;
-	while (currentnode != NULL && currentnode->data != pos{
-		currentnode = currentnode->next;
-	}
-	if (currentnode == NULL){
-		return 0;
-	}
-	if (currentnode->next == NULL){
-		currentnode->next = newNode;
-		newNode->previous = currentnode;
-		(l->tail) = newNode;
-	}
-	node_t* nextnode = currentnode->next;
-	currentnode->next = newNode;
-	newNode->previous = currentnode;
-	newNode->next = nextnode;
-	nextnode->previous = newNode;
+		node_t* currentnode = l->head;
+		while (currentnode != NULL && currentnode->data != pos){
+			currentnode = currentnode->next;
+		}
 	
+		if (currentnode == NULL){
+			return 0;
+		}
+		if (currentnode->next == NULL){
+			currentnode->next = newNode;
+			newNode->previous = currentnode;
+			(l->tail) = newNode;
+		} else {
+			node_t* nextnode = currentnode->next;
+			currentnode->next = newNode;
+			newNode->previous = currentnode;
+			newNode->next = nextnode;
+			nextnode->previous = newNode;
+		}
+	}
 	return 1;
 }	
 
@@ -234,7 +246,7 @@ void* dll_get(dll_t* l, int pos){
 // Assume no negative numbers in the list or the number zero.
 void* dll_remove(dll_t* l, int pos){
         if (pos < 0 || pos > (l->count)){
-                return 0;
+                return NULL;
         }
 
         node_t* cur = l->head;
@@ -244,7 +256,7 @@ void* dll_remove(dll_t* l, int pos){
 	
 	// Null cur
 	if (cur == NULL){
-		return -1;
+		return NULL;
 	}
 	// Handle first item
 	if (cur->previous == NULL){
@@ -272,7 +284,7 @@ void* dll_remove(dll_t* l, int pos){
 		cur->next->previous = cur->previous;
 		free(cur);
 	}	
-	return 1;
+
 }
 
 // DLL Size
