@@ -62,7 +62,8 @@ graph_node_t* find_node( graph_t * g, int value){
 graph_node_t * create_graph_node(int value){
     graph_node_t * graph_node = malloc(sizeof(graph_node_t));
     
-    if ( graph_node == NULL ) return NULL;
+    if ( graph_node == NULL ) 
+        return NULL;
     
     graph_node->data = value;
     graph_node->inNeighbors = create_dll();
@@ -75,12 +76,15 @@ graph_node_t * create_graph_node(int value){
 // Returns 0 on failure ( or if the node already exists )
 // Returns -1 if the graph is NULL.
 int graph_add_node(graph_t* g, int value){
-    if ( g == NULL ) return -1;
+    if ( g == NULL ) 
+        return -1;
     
-    if (find_node(g, value) != NULL) return -1;
+    if (find_node(g, value) != NULL) 
+        return -1;
     
     graph_node_t * newNode = create_graph_node(value);
-    if ( newNode == NULL ) return -1;
+    if ( newNode == NULL ) 
+        return -1;
     
     assert(g->nodes);
     dll_push_back(g->nodes, newNode);
@@ -243,12 +247,16 @@ int getNumOutNeighbors( graph_t * g, int value){
 // Returns the number of nodes in the graph
 // Returns -1 if the graph is NULL.
 int graph_num_nodes(graph_t* g){
+    if (g == NULL);
+        return -1;
     return g->numNodes;
 }
 
 // Returns the number of edges in the graph,
 // Returns -1 on if the graph is NULL
 int graph_num_edges(graph_t* g){
+    if (g == NULL);
+        return -1;
     return g->numEdges;
 }
 // Free graph
@@ -256,7 +264,17 @@ int graph_num_edges(graph_t* g){
 // This should be called before the program terminates.
 // Make sure you free all the dll's too.
 void free_graph(graph_t* g){
-
+    dll_t* dll_nodes = g->nodes;
+    node_t* current = dll_nodes->head;
+    while(current != NULL){
+        graph_node_t* gnode = (graph_node_t*)(current->data);
+        free_dll(gnode->inNeighbors);
+        free_dll(gnode->outNeighbors);
+        free(gnode);
+        current = current->next;
+    }
+    free_dll(dll_nodes);
+    free(g);
 }
 
 
