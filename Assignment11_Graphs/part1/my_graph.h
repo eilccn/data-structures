@@ -45,7 +45,16 @@ graph_t* create_graph(){
 // Returns the node pointer if the node exists.
 // Returns NULL if the node doesn't exist or the graph is NULL
 graph_node_t* find_node( graph_t * g, int value){
-       return NULL;
+    if(g == NULL)
+        return NULL;
+    dll_t* nodes = g->nodes;
+    node_t* curr = nodes->head;
+    while(curr != NULL){
+        if(((graph_node_t*) (curr->data))->data == value)
+            return (graph_node_t*)curr->data;
+        curr = curr->next;
+    }
+    return NULL;
 }
 
 // Creates a graph node
@@ -80,13 +89,56 @@ int graph_add_node(graph_t* g, int value){
     return 1;
 }
 
+// 
+int position_node(dll_t* l, int value){
+    if(dll_empty(l) == -1)
+        return -1;
+    node_t* cur = l->head;
+    int position = 0;
+    while(cur != NULL){
+        if(((graph_node_t*) (cur->data))->data == value){
+            return position;
+        }
+        cur = cur->next;
+    }
+    return -1;
+}
+
 // Returns 1 on success
 // Returns 0 on failure ( or if the node doesn't exist )
 // Returns -1 if the graph is NULL.
 int graph_remove_node(graph_t* g, int value){
     // The function removes the node from the graph along with any edges associated with it.
     // That is, this node would have to be removed from all the in and out neighbor's lists that countain it.
-    return -1;
+    if(g == NULL)
+        return -1;
+    graph_node_t* gnode = find_node(g, value);
+    if(gnode == NULL)
+        return 0;
+    dll_t* outNeigh = gnode->outNeighbors;
+    node_t* curr = outNeigh->head;
+    while(curr != NULL){
+        int dest = ((graph_node_t*)(curr->data))->data;
+        curr = curr->next;
+
+        graph_remove_edge(g, value, dest);
+    }
+
+    // free(outNeigh);
+    dll_t* inNeigh = gnode->inNeighbors;
+    curr = inNeigh->head;
+
+    while(curr != NULL){
+        int source = ((graph_node_t*)(curr->data))->data;
+        curr = curr->next;
+        graph_remove_edge(g, source, value);
+    }
+
+    int pos = position_node(g->nodes, value);
+    dll_remove(g->nodes, pos);
+    g->numNodes -= 1;
+
+    return 1;
 }
 
 // Returns 1 on success
@@ -97,7 +149,21 @@ int graph_add_edge(graph_t * g, int source, int destination){
     // Make sure you are not adding the same edge multiple times.
     // Make sure you modify the in and out neighbors appropriatelly. destination will be an out neighbor of source.
     // Source will be an in neighbor of destination.
-    return -1;
+    if(g == NULL){
+        return -1;
+    }
+    graph_node_t* source_node = find_node(g, source);
+    graph_node_t* dest_node = find_node(g, destination);
+    if(source_node == NULL || dest_node == NULL){
+        return 0;
+    }
+    if(position_node(source_node->outNeighbors, destination) >= 0){
+        return 1;
+    }
+    dll_push_back(source_node->outNeighbors, dest_node);
+    dll_push_back(dest_node->inNeighbors, source_node);
+    g->numEdges += 1;
+    return 1;
 }
 
 // Returns 1 on success
@@ -107,50 +173,83 @@ int graph_remove_edge(graph_t * g, int source, int destination){
     //The function removes an edge from source to destination but not the other way.
     //Make sure you remove destination from the out neighbors of source.
     //Make sure you remove source from the in neighbors of destination.
-    return -1;
+    if(contains_edge(g, source, destination) <= 0)
+        return contains_edge(g, source, destination);
+    dll_t* outNeigh = getOutNeighbors(g, source);
+    dll_t* inNeigh = getInNeighbors(g, destination);
+    dll_remove(inNeigh, position_node(inNeigh, source));
+    dll_remove(outNeigh, position_node(outNeigh, destination));
+    g->numEdges -= 1;
+    return 1;
 }
 
 // Returns 1 on success
 // Returns 0 on failure ( or if the source or destination nodes don't exist )
 // Returns -1 if the graph is NULL.
-int contains_edge( graph_t * g, int source, int destintaion){
-    return -1;
+int contains_edge( graph_t * g, int source, int destination){
+    if(g == NULL)
+        return -1;
+    graph_node_t* source_node = find_node(g, source);
+    if(source_node == NULL)
+        return 0;
+    graph_node_t* dest_node = find_node(g, destination);
+    if(dest_node == NULL)
+        return 0;
+    if(position_node(source_node->outNeighbors, destination) < 0)
+        return 0;
+    return 1;
 }
 
 // Returns dll_t* of all the in neighbors of this node.
 // Returns NULL if thte node doesn't exist or if the graph is NULL.
 dll_t* getInNeighbors( graph_t * g, int value ){
-    return NULL;
+    if(g == NULL)
+        return NULL;
+    graph_node_t* source = find_node(g, value);
+    if(source == NULL)
+        return NULL;
+    return source->inNeighbors;
 }
 
 // Returns the number of in neighbors of this node.
 // Returns -1 if the graph is NULL or the node doesn't exist.
 int getNumInNeighbors( graph_t * g, int value){
-    return -1;
+    dll_t* inNeigh = getInNeighbors(g, value);
+    if(inNeigh == NULL)
+        return -1;
+    return inNeigh->count;
 }
 
 // Returns dll_t* of all the out neighbors of this node.
 // Returns NULL if thte node doesn't exist or if the graph is NULL.
 dll_t* getOutNeighbors( graph_t * g, int value ){
-    return NULL;
+    if(g == NULL)
+        return NULL;
+    graph_node_t* source = find_node(g, value);
+    if(source == NULL)
+        return NULL;
+    return source->outNeighbors;
 }
 
 // Returns the number of out neighbors of this node.
 // Returns -1 if the graph is NULL or the node doesn't exist.
 int getNumOutNeighbors( graph_t * g, int value){
-    return -1;
+    dll_t* outNeigh = getOutNeighbors(g, value);
+    if(outNeigh == NULL)
+        return -1;
+    return outNeigh->count;
 }
 
 // Returns the number of nodes in the graph
 // Returns -1 if the graph is NULL.
 int graph_num_nodes(graph_t* g){
-    return 0;
+    return g->numNodes;
 }
 
 // Returns the number of edges in the graph,
 // Returns -1 on if the graph is NULL
 int graph_num_edges(graph_t* g){
-    return 0;
+    return g->numEdges;
 }
 // Free graph
 // Removes a graph and ALL of its elements from memory.
