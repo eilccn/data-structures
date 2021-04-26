@@ -296,6 +296,7 @@ void free_dll(dll_t* t){
 		free(cur);
 		cur = next;
 	}
+	free(t);
 }
 
 
