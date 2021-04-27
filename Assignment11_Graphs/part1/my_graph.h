@@ -145,11 +145,11 @@ int graph_add_edge(graph_t * g, int source, int destination){
         return 0;
     }
     if(position_node(source_node->outNeighbors, destination) >= 0){
-        return 1;
+  
+        dll_push_back(source_node->outNeighbors, dest_node);
+        dll_push_back(dest_node->inNeighbors, source_node);
+        g->numEdges += 1;
     }
-    dll_push_back(source_node->outNeighbors, dest_node);
-    dll_push_back(dest_node->inNeighbors, source_node);
-    g->numEdges += 1;
     return 1;
 }
 // Returns 1 on success
