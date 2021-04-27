@@ -76,12 +76,11 @@ graph_node_t * create_graph_node(int value){
 // Returns 0 on failure ( or if the node already exists )
 // Returns -1 if the graph is NULL.
 int graph_add_node(graph_t* g, int value){
-    if ( g == NULL ) 
-        return -1; 
-    
+    if ( g == NULL ) return -1; 
+    if (find_node(g, value) !=  NULL) return 0;    
+
     graph_node_t * newNode = create_graph_node(value);
-    if ( newNode == NULL ) 
-        return 0;
+    if ( newNode == NULL ) return 0;
     
     assert(g->nodes);
     dll_push_back(g->nodes, newNode);
@@ -255,7 +254,7 @@ int getNumInNeighbors( graph_t * g, int value){
 // Returns -1 if the graph is NULL or the node doesn't exist.
 int getNumOutNeighbors( graph_t * g, int value){
     dll_t* outNeigh = getOutNeighbors(g, value);
-    if(outNeigh == NULL)
+    if(outNeigh == NULL) 
         return -1;
     return outNeigh->count;
 }
