@@ -54,9 +54,8 @@ dll_t* create_dll(){
 int dll_empty(dll_t* l){
 	if(l == NULL)
 		return -1;
-	else if (l->head == NULL){
-		return 1;
-	} 
+	else if (l->head == NULL)
+		return 1; 
 	else
 		return 0;	
 }
@@ -127,7 +126,7 @@ int dll_push_back(dll_t* l, void* item){
 // Assume no negative numbers in the list or the number zero.
 void* dll_pop_front(dll_t* t){
 	if (dll_empty(t) == -1){
-		return -1;
+		return NULL;
 	}
 	else if (dll_empty(t) == 1){
 		return 0;
@@ -153,7 +152,7 @@ void* dll_pop_front(dll_t* t){
 // Assume no negative numbers in the list or the number zero.
 void* dll_pop_back(dll_t* t){
 	if (dll_empty(t) == -1){
-		return -1;
+		return NULL;
 	} 
 	else if (dll_empty(t) == 1){
 		return 0;
@@ -232,7 +231,7 @@ int dll_insert(dll_t* l, int pos, void* item){
 // Assume no negative numbers in the list or the number zero.
 void* dll_get(dll_t* l, int pos){
 	if (dll_empty(l) == -1){
-		return -1;
+		return NULL;
 	}
 	if (pos < 0 || pos >= (l->count)){
 		return 0;
