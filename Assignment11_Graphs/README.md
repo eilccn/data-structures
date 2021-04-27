@@ -1,10 +1,10 @@
 # TODO Please edit the following information in your assignment
 
 - Name: Eileen Chang
-- How many hours did it take you to complete this assignment? 2 days
-- Did you collaborate with any other students/TAs/Professors? 
+- How many hours did it take you to complete this assignment? 1 week
+- Did you collaborate with any other students/TAs/Professors? No
 - Did you use any external resources? (Cite them below)
-  - tbd
+  - https://www.cs.yale.edu/homes/aspnes/pinewiki/C(2f)Graphs.html
   - tbd
 - (Optional) What was your favorite part of the assignment?
 - (Optional) How would you improve the assignment?
