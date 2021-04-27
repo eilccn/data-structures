@@ -262,16 +262,12 @@ int getNumOutNeighbors( graph_t * g, int value){
 // Returns the number of nodes in the graph
 // Returns -1 if the graph is NULL.
 int graph_num_nodes(graph_t* g){
-    if (g == NULL);
-        return -1;
     return g->numNodes;
 }
 
 // Returns the number of edges in the graph,
 // Returns -1 on if the graph is NULL
 int graph_num_edges(graph_t* g){
-    if (g == NULL);
-        return -1;
     return g->numEdges;
 }
 // Free graph
