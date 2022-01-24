@@ -43,9 +43,10 @@ int unitTest1(){
 int unitTest2(){
     int result;
     bst_t * testBST = bst_create();
-    bst_add(testBST,78);
+    bst_add(testBST,78);   
     result = bst_find(testBST,78);
     bst_free(testBST);    
+
     return result;
 }
 

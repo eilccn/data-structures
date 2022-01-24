@@ -22,10 +22,17 @@
 int main(){
     
 	dll_t* test = create_dll();
-    	if (dll_empty(test) = 1){
+ 	//dll_insert(test, 0, 8);   	
+	//if (dll_size(test) == 0){
+	//	printf("good");
+	
+	//}else{
+	//	printf("bad");
+	//}
+	if (dll_empty(test) == 1){
 		printf("bye");
 	}
-    	free_dll(test);    
+    	//free_dll(test);    
     
     	return 0;
 }

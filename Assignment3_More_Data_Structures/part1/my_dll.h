@@ -98,11 +98,14 @@ int dll_push_front(dll_t* l, int item){
 	newNode->previous = NULL;
 
 	if (dll_empty(l) == 1){
+		newNode->previous = NULL;
+		l->head = newNode;
 		l->tail = newNode;
 	} else{
+		newNode->next = l->head;
 		l->head->previous = newNode;
-	}
-	l->head = newNode;		
+		l->head = newNode;	
+	}	
 	return 1;
 }
 
