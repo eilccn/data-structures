@@ -18,32 +18,34 @@ int main(){
 		printf("***************************\n");
  
 		number = rand()%10+1;	
-		num_guesses = 0;
-	
+		num_guesses = 1;
+		
 		do{
 			printf("Make a guess: ");
-			scanf("%d", &current_guess);
-			array[i] = num_guesses++;
+			scanf("%d", &current_guess); 
+			array[i] = num_guesses++;	
 
 			if (current_guess > number){
 				printf("No guess lower!\n");
+				 
 			}
 
 			else if (current_guess < number){
 				printf("No guess higher!\n");
+				 
 			}	
 
 			else {
-				printf("You got it!\n");
+				printf("You got it!\n"); 
 			}
-		} while (current_guess != number);
+		} while (current_guess != number); 
 	}
 	
 	printf("***************************\n");
 	printf("Here are your results!\n");
 	printf("***************************\n");
 	for (i=0; i<5; i++){
-		printf("Game %d took you %d guesses\n", i,
+		printf("Game %d took you %d guesses\n", i+1,
 		array[i]);	
 	}
 	return 0;	
